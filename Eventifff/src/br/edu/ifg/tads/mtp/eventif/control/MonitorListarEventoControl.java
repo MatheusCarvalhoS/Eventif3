@@ -106,6 +106,18 @@ public class MonitorListarEventoControl {
 				appView.getPainelDireita().repaint();
 			}
 		});
+		
+		listarEvento.getLerQRcode().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {             //somente abre a tela de leitura
+				try {
+					new MonitorLerQRcodeEventoControl().getMonitorLerQRcodeControl(appView.getDesk());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 	}
 

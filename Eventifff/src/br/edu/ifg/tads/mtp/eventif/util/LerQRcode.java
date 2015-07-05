@@ -51,9 +51,11 @@ import com.smaxe.uv.na.webcam.IWebcam;
 public class LerQRcode extends Object {
 	private IWebcam webcam = null;
 	private JButton jbtFechar; 
+	private String tipo;
 	
-	public JInternalFrame getLerQRcode() throws Exception {
+	public JInternalFrame getLerQRcode(String tipo) throws Exception {
 		jbtFechar = new JButton("Fechar");
+		this.tipo = tipo;
 
 		final JComboBox webcamComboBox = new JComboBox();
 		final JInternalFrame frame = new JInternalFrame("WebCam", false,false,false,false);
@@ -252,8 +254,18 @@ public class LerQRcode extends Object {
 			String charset = "UTF-8";
 			Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
 			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+			
+			if(tipo.equals("evento")){
+				
+			}else if(tipo.equals("atividade")){
+				
+			}
+			
 			System.out.println("Data read from QR Code: "
 					+ readQRCode(filePath, charset, hintMap));
+			
+			// aqui será chamada a DAO para jogar e evento ou em atividade.
+			
 			JOptionPane.showMessageDialog(null, "RQcode Lido com Sucesso!");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO ao Ler o QRcode!");
@@ -269,5 +281,7 @@ public class LerQRcode extends Object {
 				hintMap);
 		return qrCodeResult.getText();
 	}
+	
+	
 
 }

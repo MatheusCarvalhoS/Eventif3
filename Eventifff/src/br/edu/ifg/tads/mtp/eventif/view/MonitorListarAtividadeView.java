@@ -17,6 +17,7 @@ public class MonitorListarAtividadeView {
 	private JTextField jtfPesquisar;
 	private JTable table;
 	private JButton jbtnPesquisar;
+	private JButton lerQRcode;
 
 	public JPanel getMonitorListarAtividadeView() {
 		painel = new JPanel();
@@ -28,6 +29,9 @@ public class MonitorListarAtividadeView {
 		jtfPesquisar.setFont(new Font("HanziPen TC", Font.BOLD, 12));
 		jtfPesquisar.setBounds(20, 20, 500, 28);
 		jtfPesquisar.setColumns(10);
+
+		lerQRcode = new JButton("Ler QRcode Atividade");
+		lerQRcode.setBounds(40, 550, 170, 25);
 
 		jbtnPesquisar = new JButton("Pesquisar");
 		jbtnPesquisar.setForeground(new Color(0, 0, 128));
@@ -44,11 +48,20 @@ public class MonitorListarAtividadeView {
 		jScrollPane.setBounds(5, 60, 970, 450);
 
 		painel.add(jScrollPane);
+		painel.add(lerQRcode);
 		painel.add(jtfPesquisar);
 		painel.add(jbtnPesquisar);
 		painel.setBackground(new Color(240, 240, 240));
 
 		return painel;
+	}
+
+	public JButton getLerQRcode() {
+		return lerQRcode;
+	}
+
+	public void setLerQRcode(JButton lerQRcode) {
+		this.lerQRcode = lerQRcode;
 	}
 
 	public JTextField getJtfPesquisar() {

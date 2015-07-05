@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.AtividadeDAO;
+import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
+import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAtividadeView;
 import br.edu.ifg.tads.mtp.eventif.view.MonitorListarAtividadeView;
@@ -29,6 +32,7 @@ public class MonitorListarAtividadeControl {
 		listarAtividade = new MonitorListarAtividadeView();
 		painel = listarAtividade.getMonitorListarAtividadeView();
 		
+		adicionaEventos();
 		preencheTabela();
 		return painel;
 	}
@@ -60,4 +64,34 @@ public class MonitorListarAtividadeControl {
 		listarAtividade.getTable().setModel(model);
 		listarAtividade.getTable().getColumn("id").setMaxWidth(25);
 	}
+	
+public void adicionaEventos() {
+		
+		listarAtividade.getJbtnPesquisar().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				EnderecoModel endereco = new EnderecoModel();
+				EventoModel evento = new EventoModel();
+				JOptionPane.showMessageDialog(null, "Pesquisar aqui");
+
+			}
+		});
+	
+		
+		listarAtividade.getLerQRcode().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {             //somente abre a tela de leitura
+				try {
+					new MonitorLerQRcodeAtividadeControl().getMonitorLerQRcodeControl(appView.getDesk());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
+	
+	
 }

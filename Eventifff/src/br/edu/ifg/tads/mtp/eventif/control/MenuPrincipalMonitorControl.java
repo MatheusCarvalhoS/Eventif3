@@ -37,18 +37,6 @@ public class MenuPrincipalMonitorControl {
 			}
 		});
 		
-		menuMonitor.getLerQRcode().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {             //somente abre a tela de leitura
-				try {
-					new MonitorLerQRcodeControl().getMonitorLerQRcodeControl(appView.getDesk());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
 	}
 	
 	
