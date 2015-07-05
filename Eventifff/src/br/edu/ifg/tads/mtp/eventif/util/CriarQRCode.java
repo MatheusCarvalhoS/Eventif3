@@ -15,10 +15,10 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class CriarQRCode {
 
-	public static void CriarQRCode(String[] args) throws WriterException,
+	public static void getCriarQRCode(String cpf) throws WriterException,
 			IOException, NotFoundException {
-		String qrCodeData = "CPF da pessoa para gerar o qr code";
-		String filePath = "ifg2015.png";
+		String qrCodeData = cpf;
+		String filePath = cpf+".png";
 		String charset = "UTF-8";
 		Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
 		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);

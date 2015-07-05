@@ -10,8 +10,8 @@ import br.edu.ifg.tads.mtp.eventif.view.AppView;
 
 public class MonitorLerQRcodeAtividadeControl {
 	
-	public void getMonitorLerQRcodeControl(JDesktopPane appView) throws Exception {
-		JInternalFrame inter = new LerQRcode().getLerQRcode("atividade");
+	public void getMonitorLerQRcodeControl(JDesktopPane appView, int id) throws Exception {
+		JInternalFrame inter = new LerQRcode().getLerQRcode("atividade", id);
 		inter.setBounds(0, 60, 640, 70);
 		appView.add(inter);
 		appView.moveToFront(inter);

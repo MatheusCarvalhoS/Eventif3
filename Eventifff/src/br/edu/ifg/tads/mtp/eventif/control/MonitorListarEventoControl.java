@@ -110,9 +110,13 @@ public class MonitorListarEventoControl {
 		listarEvento.getLerQRcode().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {             //somente abre a tela de leitura
+			public void actionPerformed(ActionEvent arg0) {   
+				int id = Integer.parseInt(listarEvento.getTable()
+						.getValueAt(listarEvento.getTable().getSelectedRow(), 0).toString());
+				
+				
 				try {
-					new MonitorLerQRcodeEventoControl().getMonitorLerQRcodeControl(appView.getDesk());
+					new MonitorLerQRcodeEventoControl().getMonitorLerQRcodeControl(appView.getDesk(), id);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

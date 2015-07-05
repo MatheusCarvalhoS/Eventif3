@@ -51,11 +51,13 @@ import com.smaxe.uv.na.webcam.IWebcam;
 public class LerQRcode extends Object {
 	private IWebcam webcam = null;
 	private JButton jbtFechar; 
-	private String tipo;
+	private static String tipo;
+	private static int id;
 	
-	public JInternalFrame getLerQRcode(String tipo) throws Exception {
+	public JInternalFrame getLerQRcode(String tipo, int id) throws Exception {
 		jbtFechar = new JButton("Fechar");
 		this.tipo = tipo;
+		this.id = id;
 
 		final JComboBox webcamComboBox = new JComboBox();
 		final JInternalFrame frame = new JInternalFrame("WebCam", false,false,false,false);
@@ -179,7 +181,7 @@ public class LerQRcode extends Object {
 													}
 													try {
 														File file = new File(
-																"ifg.png");
+																"ifg2015.png");
 														VideoFrameFactory
 																.saveAsPng(
 																		file,
@@ -250,16 +252,11 @@ public class LerQRcode extends Object {
 	public void lerqr() throws FileNotFoundException, NotFoundException,
 			IOException {
 		try {
-			String filePath = "ifg.png";
+			String filePath = "ifg2015.png";
 			String charset = "UTF-8";
 			Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
 			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-			
-			if(tipo.equals("evento")){
-				
-			}else if(tipo.equals("atividade")){
-				
-			}
+		
 			
 			System.out.println("Data read from QR Code: "
 					+ readQRCode(filePath, charset, hintMap));
@@ -279,6 +276,16 @@ public class LerQRcode extends Object {
 						ImageIO.read(new FileInputStream(filePath)))));
 		Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap,
 				hintMap);
+		
+		if(tipo.equals("evento")){
+			
+			// o id vai servir para dizer qual é o id correspondente.
+			
+			JOptionPane.showMessageDialog(null, "entrei evento");
+		}else if(tipo.equals("atividade")){
+			JOptionPane.showMessageDialog(null, "entrei Atividade");
+		}
+		
 		return qrCodeResult.getText();
 	}
 	
