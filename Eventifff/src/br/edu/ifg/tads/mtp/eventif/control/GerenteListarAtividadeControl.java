@@ -99,7 +99,6 @@ public class GerenteListarAtividadeControl {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("pesquisei");
 				listarAtividade.getTable().removeAll();
 				listarAtividade.getTable().setModel(new PesquisarEventoOuAtividadeControl().getPesquisarAtividadeControl(listarAtividade.getJtfPesquisar().getText(), idEvento));
 				

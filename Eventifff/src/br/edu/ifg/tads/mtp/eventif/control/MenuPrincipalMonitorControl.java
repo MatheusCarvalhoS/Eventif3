@@ -14,9 +14,10 @@ public class MenuPrincipalMonitorControl {
 	private JButton lerQRcode;
 	private MenuPrincipalMonitorView menuMonitor;
 	private AppView appView;
-	
-	public JPanel getMenuPrincipalMonitorControl(AppView app){
+	private int idMonitor;
+	public JPanel getMenuPrincipalMonitorControl(AppView app, int idMonitor){
 		this.appView = app;
+		this.idMonitor=idMonitor;
 		menuMonitor = new MenuPrincipalMonitorView();
 		menu = menuMonitor.getMenuPrincipalMonitorView();
 		
@@ -32,7 +33,7 @@ public class MenuPrincipalMonitorControl {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				appView.getPainelDireita().removeAll();
-				appView.getPainelDireita().add(new MonitorListarEventoControl().getMonitorListarEventoControl(appView));
+				appView.getPainelDireita().add(new MonitorListarEventoControl().getMonitorListarEventoControl(appView, idMonitor));
 				appView.repaint();
 			}
 		});

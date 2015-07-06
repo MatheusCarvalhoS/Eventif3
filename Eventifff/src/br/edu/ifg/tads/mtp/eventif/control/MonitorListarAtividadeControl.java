@@ -67,16 +67,18 @@ public class MonitorListarAtividadeControl {
 	
 public void adicionaEventos() {
 		
-		listarAtividade.getJbtnPesquisar().addActionListener(new ActionListener() {
+	listarAtividade.getJbtnPesquisar().addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("pesquisei evento");
+			listarAtividade.getTable().removeAll();
+			listarAtividade.getTable().setModel(new PesquisarEventoOuAtividadeControl().getPesquisarAtividadeControl(listarAtividade.getJtfPesquisar().getText(), idEvento));
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EnderecoModel endereco = new EnderecoModel();
-				EventoModel evento = new EventoModel();
-				JOptionPane.showMessageDialog(null, "Pesquisar aqui");
+			listarAtividade.getTable().getColumn("id").setMaxWidth(25);
 
-			}
-		});
+			listarAtividade.getTable().repaint();
+		}
+	});
 	
 		listarAtividade.getLerQRcode().addActionListener(new ActionListener() {
 			

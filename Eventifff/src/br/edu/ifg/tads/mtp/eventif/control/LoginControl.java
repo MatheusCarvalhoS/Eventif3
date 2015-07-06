@@ -78,16 +78,17 @@ public class LoginControl {
 						monitor = new MonitorModel();
 						monitor.setCpf(cpf);
 						monitor.setSenha(senha);
+						monitor.setIdMonitor(1); // --------- Verificar a existência do monitor no banco com o cpf, validar a senha e receber o id de monitor
 
 						appView.getPainelEsquerda().removeAll();
 						appView.getPainelDireita().removeAll();
 
 						appView.getPainelEsquerda()
 								.add(new MenuPrincipalMonitorControl()
-										.getMenuPrincipalMonitorControl(appView));
+										.getMenuPrincipalMonitorControl(appView, monitor.getIdMonitor()));
 						appView.getPainelDireita()
 								.add(new MonitorListarEventoControl()
-										.getMonitorListarEventoControl(appView));
+										.getMonitorListarEventoControl(appView, monitor.getIdMonitor()));
 
 						appView.getPainelDireita().repaint();
 						appView.getPainelEsquerda().repaint();

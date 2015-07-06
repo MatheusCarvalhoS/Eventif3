@@ -27,10 +27,11 @@ public class MonitorListarEventoControl {
 	private Action excluir;
 	private Action addAtividade;
 	private AppView appView;
-
-	public JPanel getMonitorListarEventoControl(AppView app) {
+	private int idMonitor;
+	
+	public JPanel getMonitorListarEventoControl(AppView app, int idMonitor) {
 		this.appView = app;
-
+		this.idMonitor=idMonitor;
 		listarEvento = new MonitorListarEventoView();
 		painel = listarEvento.getMonitorListarEventoView();
 		
@@ -55,7 +56,7 @@ public class MonitorListarEventoControl {
 	}
 
 	public void preencheTabela() {
-		Vector<Vector<String>> listaEventos = new EventoDAO().buscaEventos();
+		Vector<Vector<String>> listaEventos = new EventoDAO().buscaEventosMonitor(idMonitor);
 		preencheTabela(listaEventos);
 	}
 
@@ -84,13 +85,15 @@ public class MonitorListarEventoControl {
 	public void adicionaEventos() {
 		
 		listarEvento.getJbtnPesquisar().addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EnderecoModel endereco = new EnderecoModel();
-				EventoModel evento = new EventoModel();
-				JOptionPane.showMessageDialog(null, "Pesquisar aqui");
+				System.out.println("pesquisei evento");
+				listarEvento.getTable().removeAll();
+				listarEvento.getTable().setModel(new PesquisarEventoOuAtividadeControl().getPesquisarEventoControl(listarEvento.getJtfPesquisar().getText()));
 
+				listarEvento.getTable().getColumn("id").setMaxWidth(25);
+	
+				listarEvento.getTable().repaint();
 			}
 		});
 		

@@ -59,17 +59,19 @@ public class PessoaInscricaoSistemaControl {
 						validacao = false;
 						JOptionPane.showMessageDialog(null, "Senhas não conferem!");
 					}else{
-						aluno.setCpf(cpf);
+					
 						try {
 							new CriarQRCode().getCriarQRCode(cpf);
+							aluno.setCpf(cpf);
+							aluno.setRg(inscreverPessoa.getTxRg().getText());
+							aluno.setSenha(inscreverPessoa.getTxSenha().getText());
 							JOptionPane.showMessageDialog(null, "QRcode Gerado com Sucesso! ");
 						} catch (NotFoundException | WriterException
 								| IOException e) {
 							JOptionPane.showMessageDialog(null, "Erro ao criar o QrCode! "+ e.getMessage());
 							e.printStackTrace();
 						}
-						aluno.setRg(inscreverPessoa.getTxRg().getText());
-						aluno.setSenha(inscreverPessoa.getTxSenha().getText());
+						
 					}
 					
 					if(!validacao){

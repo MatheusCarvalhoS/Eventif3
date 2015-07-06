@@ -57,7 +57,75 @@ public class AtividadeDAO {
 		return retorno;
 	}
 	
-	public Vector<Vector<String>> buscaAtividades(int id){
+	public Vector<Vector<String>> buscaAtividadesAluno(int idEvento, int idAluno){
+		try {
+			Vector<Vector<String>> listaAtividades = new Vector<Vector<String>>();
+			PreparedStatement stmt1 = new ConnectionFactory()
+					.getConnection()
+					.prepareStatement(
+							"select * from atividade where(idEvento = ?) order by idAtividade");
+			
+			stmt1.setInt(1, idEvento);
+			ResultSet result1 = stmt1.executeQuery();
+			
+			while(result1.next()){
+				String situacao = "Não inscrito";
+				AtividadeModel atividade = new AtividadeModel();
+				atividade.setIdAtividade(result1.getLong("idAtividade"));
+				atividade.setNomeAtividade(result1.getString("nomeAtividade"));
+				atividade.setDescricaoAtividade(result1.getString("descricaoAtividade"));
+				atividade.setHoraInicio(result1.getString("horaInicio"));
+				atividade.setHoraEncerramento(result1.getString("horaEncerramento"));
+				atividade.setPalestrante(result1.getString("palestrante"));
+				atividade.setTipoAtividade(result1.getString("tipoAtividade"));				
+				atividade.setCargaHoraria(result1.getString("cargaHoraria"));
+				atividade.setNumeroVagas(result1.getInt("numeroVagas"));
+				
+				
+				Calendar data = Calendar.getInstance(); // o erro está aqui, não consegue listar = null
+				data.setTime(result1.getDate("data"));
+				atividade.setData(data);
+				
+				Vector<String> colunas = new Vector<String>();
+				colunas.add(""+atividade.getIdAtividade());
+				colunas.add(atividade.getNomeAtividade());
+				colunas.add(atividade.getDescricaoAtividade());
+				colunas.add(atividade.getHoraInicio());
+				colunas.add(atividade.getHoraEncerramento());
+				colunas.add(atividade.getPalestrante());
+				colunas.add(atividade.getTipoAtividade());
+				colunas.add(atividade.getCargaHoraria());
+				colunas.add(""+atividade.getNumeroVagas());
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				colunas.add(sdf.format(atividade.getData().getTime()));
+				
+				PreparedStatement stmt2 = new ConnectionFactory()
+				.getConnection()
+				.prepareStatement(
+						"select idAluno from alunoAtividade where idAluno=? and idAtividade=?");
+				stmt2.setInt(1, idAluno);
+				stmt2.setInt(2, (int) atividade.getIdAtividade());
+				
+				ResultSet result2 = stmt2.executeQuery();
+				if(result2.next()){
+					situacao = "Inscrito";
+				}
+				
+				colunas.add(situacao);
+				listaAtividades.add(colunas);
+			}
+			result1.close();
+			stmt1.close();
+			return listaAtividades;
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao listar tabela de eventos! ");
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Vector<Vector<String>> buscaAtividades(int idEvento){
 		try {
 			Vector<Vector<String>> listaAtividades = new Vector<Vector<String>>();
 			PreparedStatement stmt = new ConnectionFactory()
@@ -65,7 +133,7 @@ public class AtividadeDAO {
 					.prepareStatement(
 							"select * from atividade where(idEvento = ?) order by idAtividade");
 			
-			stmt.setInt(1, id);
+			stmt.setInt(1, idEvento);
 			ResultSet result = stmt.executeQuery();
 			while(result.next()){
 				AtividadeModel atividade = new AtividadeModel();

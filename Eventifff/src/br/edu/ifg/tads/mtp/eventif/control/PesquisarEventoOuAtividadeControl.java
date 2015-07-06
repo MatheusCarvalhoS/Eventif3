@@ -33,7 +33,6 @@ public class PesquisarEventoOuAtividadeControl {
 		colunas.add("Tipo");
 		colunas.add("Carga Horaria");
 		colunas.add("Numero de Vagas");
-		colunas.add("Data");
 
 		DefaultTableModel model = new DefaultTableModel(listaEvento, colunas);
 	

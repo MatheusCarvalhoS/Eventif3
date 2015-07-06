@@ -36,12 +36,14 @@ public class AlunoListarAtividadeControl {
 	private AppView appView;
 	private int idAtividade;
 	private int idEvento;
+	private String situacaoEvento;
 
-	public JPanel getAlunoListarAtividadeControl(AppView app, int idEvento, int idAluno) {
+	public JPanel getAlunoListarAtividadeControl(AppView app, int idEvento, int idAluno, String situacaoEvento) {
 		this.appView = app;
 		aluno = new AlunoModel();
 		aluno.setIdAluno(idAluno);
 		this.idEvento = idEvento;
+		this.situacaoEvento=situacaoEvento;
 
 		listarAtividade = new AlunoListarAtividadeView();
 		painel = listarAtividade.getAlunoListarAtividadeView();
@@ -53,7 +55,7 @@ public class AlunoListarAtividadeControl {
 
 
 	public void preencheTabela() {
-		Vector<Vector<String>> listaAtividade = new AtividadeDAO().buscaAtividades(idEvento);
+		Vector<Vector<String>> listaAtividade = new AtividadeDAO().buscaAtividadesAluno(idEvento, aluno.getIdAluno());
 		preencheTabela(listaAtividade);
 	}
 
@@ -73,6 +75,7 @@ public class AlunoListarAtividadeControl {
 		colunas.add("Carga Horaria");
 		colunas.add("Numero de Vagas");
 		colunas.add("Data");
+		colunas.add("Situação");
 
 		DefaultTableModel model = new DefaultTableModel(listaAtividade, colunas);
 		listarAtividade.getTable().setModel(model);
@@ -87,14 +90,21 @@ public class AlunoListarAtividadeControl {
 				idAtividade = Integer.parseInt(listarAtividade.getTable()
 						.getValueAt(listarAtividade.getTable().getSelectedRow(), 0).toString());
 				
-				if(new AlunoDAO().inscricaoAtividade(aluno.getIdAluno(), idAtividade)){
+				String situacao = listarAtividade.getTable()
+						.getValueAt(listarAtividade.getTable().getSelectedRow(), 10).toString();
+				
+				if(situacaoEvento.equals("Inscrito") & !situacao.equals("Inscrito") & new AlunoDAO().inscricaoAtividade(aluno.getIdAluno(), idAtividade)){
 					JOptionPane.showMessageDialog(null, "Aluno cadastrado com sucesso na Atividade!");
 					appView.getPainelDireita().removeAll();
 					appView.getPainelDireita().add(
-							new AlunoListarAtividadeControl()
-									.getAlunoListarAtividadeControl(appView, idEvento, aluno.getIdAluno()));
+							new AlunoListarAtividadeControl().getAlunoListarAtividadeControl(appView, idEvento, aluno.getIdAluno(), situacaoEvento));
 					appView.getPainelDireita().repaint();
-				}else{
+				}else if(!situacaoEvento.equals("Inscrito")){
+					JOptionPane.showMessageDialog(null, "Aluno não está inscrito no Evento!");
+				}else if(situacao.equals("Inscrito")){
+					JOptionPane.showMessageDialog(null, "Aluno não pode ser recadastrado na Atividade!");
+				}
+				else{
 					JOptionPane.showMessageDialog(null, "Aluno não cadastrado na Atividade!");
 				}
 			}
@@ -110,6 +120,30 @@ public class AlunoListarAtividadeControl {
 				
 				listarAtividade.getTable().getColumn("id").setMaxWidth(25);
 				listarAtividade.getTable().repaint();
+			}
+		});
+		
+		listarAtividade.getSairAtividade().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int idAtividade = Integer.parseInt(listarAtividade.getTable()
+						.getValueAt(listarAtividade.getTable().getSelectedRow(), 0).toString());
+				
+				String situacao = listarAtividade.getTable()
+						.getValueAt(listarAtividade.getTable().getSelectedRow(), 10).toString();
+				
+				if(situacao.equals("Inscrito") & new AlunoDAO().sairDeAtividade(aluno.getIdAluno(), idAtividade)){
+					JOptionPane.showMessageDialog(null, "O aluno foi desvinculado da atividade!");
+					appView.getPainelDireita().removeAll();
+					appView.getPainelDireita().add(
+							new AlunoListarAtividadeControl().getAlunoListarAtividadeControl(appView, idEvento, aluno.getIdAluno(), situacaoEvento));
+					appView.getPainelDireita().repaint();
+				}else if(!situacao.equals("Inscrito")){
+					JOptionPane.showMessageDialog(null, "O aluno não está cadastrado no Evento!");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Não foi possível realizar a operação!");
+				}
 			}
 		});
 	}
