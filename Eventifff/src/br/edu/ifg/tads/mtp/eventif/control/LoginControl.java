@@ -3,10 +3,14 @@ package br.edu.ifg.tads.mtp.eventif.control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import br.edu.ifg.tads.mtp.eventif.dao.AlunoDAO;
+import br.edu.ifg.tads.mtp.eventif.dao.GerenteDAO;
+import br.edu.ifg.tads.mtp.eventif.dao.MonitorDAO;
 import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.GerenteModel;
 import br.edu.ifg.tads.mtp.eventif.model.MonitorModel;
 import br.edu.ifg.tads.mtp.eventif.util.ConfirmaSenha;
+import br.edu.ifg.tads.mtp.eventif.util.MD5;
 import br.edu.ifg.tads.mtp.eventif.util.ValidacaoCPF;
 import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposLogin;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
@@ -42,32 +46,40 @@ public class LoginControl {
 						.getVerificaCamposCriarLogin(login)) {
 					String cpf = login.getTxCpf().getText().replace(".", "")
 							.replace("-", "");
-					String senha = login.getTfSenha().getText();
+					String senha = null;
+					try {
+						senha = new MD5().gerarSenha(login.getTfSenha().getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
 					if (!new ValidacaoCPF().validaCpf(cpf)) {
 						validacao = false;
 						JOptionPane.showMessageDialog(null, "CPF inválido!");
-					}
-
-					if (!validacao) {
 						login.getTxCpf().setText("");
 						login.getTfSenha().setText("");
+					}
+					
+					int idAluno = 0;
+					int idMonitor = 0;
+					int idGerente = 0;
+					if(validacao & text.equals("Participante") & (idAluno=new AlunoDAO().verificaLogin(cpf, senha)) ==0 ){
+						validacao=false;
+					}else if(validacao & text.equals("Monitor (a)") & (idMonitor = new MonitorDAO().verificaLogin(cpf, senha)) ==0 ){
+						validacao=false;
+					}else if(validacao & text.equals("Gerente") & (idGerente=new GerenteDAO().verificaLogin(cpf, senha)) ==0 ){
+						validacao=false;
 					}
 
 					if (text.equals("Gerente") & validacao) {
 						gerente = new GerenteModel();
 						gerente.setCpf(cpf);
 						gerente.setSenha(senha);
-
-						/*
-						 * if(new GerenteDao().verificaLogin(gerente)){ Faz as
-						 * parada que tem q fazer q tá ali em baixo }
-						 */
-
+						gerente.setIdGerente(idGerente);
 						appView.getPainelEsquerda().removeAll();
 						appView.getPainelEsquerda().add(
 								new MenuPrincipalGerenteControl()
 										.getMenuPrincipalGerente(appView));
-
 						appView.getPainelEsquerda().repaint();
 						appView.getPainelDireita().removeAll();
 						appView.getPainelDireita()
@@ -78,7 +90,7 @@ public class LoginControl {
 						monitor = new MonitorModel();
 						monitor.setCpf(cpf);
 						monitor.setSenha(senha);
-						monitor.setIdMonitor(1); // --------- Verificar a existência do monitor no banco com o cpf, validar a senha e receber o id de monitor
+						monitor.setIdMonitor(idMonitor); // --------- Verificar a existência do monitor no banco com o cpf, validar a senha e receber o id de monitor
 
 						appView.getPainelEsquerda().removeAll();
 						appView.getPainelDireita().removeAll();
@@ -96,7 +108,7 @@ public class LoginControl {
 						aluno = new AlunoModel();
 						aluno.setCpf(cpf);
 						aluno.setSenha(senha);
-						aluno.setIdAluno(1);
+						aluno.setIdAluno(idAluno);
 
 						appView.getPainelEsquerda().removeAll();
 						appView.getPainelDireita().removeAll();
@@ -113,11 +125,10 @@ public class LoginControl {
 					}
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"Verifique os preenchimentos dos Campos.");
+							"Verifique o preenchimento dos Campos.");
 					login.getTxCpf().setText("");
 					login.getTfSenha().setText("");
 				}
-
 			}
 		});
 	}

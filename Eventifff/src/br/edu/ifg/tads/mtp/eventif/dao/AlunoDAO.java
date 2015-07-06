@@ -185,5 +185,31 @@ public class AlunoDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public int verificaLogin(String cpf, String senha){
+		String sql = "select idAluno aluno a inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and a.senha=?);";
+		Connection con = null;
+		int idAluno=0;
+		try {
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, cpf);
+			stmt.setString(2, senha);
+			stmt.executeQuery();
+			ResultSet result = stmt.executeQuery();
+			idAluno = result.getInt("idAluno");
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"Verifique CPF e Senha! " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null,
+						"Impossível fechar conexão! " + e.getMessage());
+			}
+		}
+		return idAluno;
+	}
 
 }

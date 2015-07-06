@@ -17,6 +17,7 @@ import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
 import br.edu.ifg.tads.mtp.eventif.util.ConfirmaSenha;
 import br.edu.ifg.tads.mtp.eventif.util.CriarQRCode;
+import br.edu.ifg.tads.mtp.eventif.util.MD5;
 import br.edu.ifg.tads.mtp.eventif.util.ValidacaoCPF;
 import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposPessoaInscricao;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
@@ -64,7 +65,13 @@ public class PessoaInscricaoSistemaControl {
 							new CriarQRCode().getCriarQRCode(cpf);
 							aluno.setCpf(cpf);
 							aluno.setRg(inscreverPessoa.getTxRg().getText());
-							aluno.setSenha(inscreverPessoa.getTxSenha().getText());
+							String senha = null;
+							try {
+								senha = new MD5().gerarSenha(inscreverPessoa.getTxSenha().getText());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							aluno.setSenha(senha);
 							JOptionPane.showMessageDialog(null, "QRcode Gerado com Sucesso! ");
 						} catch (NotFoundException | WriterException
 								| IOException e) {
