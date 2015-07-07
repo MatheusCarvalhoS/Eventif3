@@ -37,22 +37,7 @@ public class MonitorListarEventoControl {
 		
 		preencheTabela();
 		adicionaEventos();
-		adicionaListenner();
 		return painel;
-	}
-
-	public void adicionaListenner() {
-		Dispatcher.getInstance().addListener(new Listener() {
-			@Override
-			public void receivedEvent(
-					br.edu.ifg.tads.mtp.eventif.util.Event event) {
-				if (event.getName().equals("excluir")
-						|| event.getName().equals("alterar")
-						|| event.getName().equals("nova atividade")) {
-					preencheTabela();
-				}
-			}
-		});
 	}
 
 	public void preencheTabela() {
@@ -116,7 +101,6 @@ public class MonitorListarEventoControl {
 			public void actionPerformed(ActionEvent arg0) {   
 				int id = Integer.parseInt(listarEvento.getTable()
 						.getValueAt(listarEvento.getTable().getSelectedRow(), 0).toString());
-				
 				
 				try {
 					new MonitorLerQRcodeEventoControl().getMonitorLerQRcodeControl(appView.getDesk(), id);

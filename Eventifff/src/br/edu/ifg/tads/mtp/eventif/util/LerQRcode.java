@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
@@ -33,6 +34,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.InternalFrameAdapter;
+
+import br.edu.ifg.tads.mtp.eventif.control.PresencaControl;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.EncodeHintType;
@@ -257,13 +260,11 @@ public class LerQRcode extends Object {
 			Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
 			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 		
-			
-			System.out.println("Data read from QR Code: "
-					+ readQRCode(filePath, charset, hintMap));
-			
+			String cpf = readQRCode(filePath, charset, hintMap);
 			// aqui será chamada a DAO para jogar e evento ou em atividade.
-			
+			new PresencaControl().getLerQrCode(cpf, tipo, id);
 			JOptionPane.showMessageDialog(null, "RQcode Lido com Sucesso!");
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO ao Ler o QRcode!");
 		}
@@ -276,19 +277,6 @@ public class LerQRcode extends Object {
 						ImageIO.read(new FileInputStream(filePath)))));
 		Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap,
 				hintMap);
-		
-		if(tipo.equals("evento")){
-			
-			// o id vai servir para dizer qual é o id correspondente.
-			
-			JOptionPane.showMessageDialog(null, "entrei evento");
-		}else if(tipo.equals("atividade")){
-			JOptionPane.showMessageDialog(null, "entrei Atividade");
-		}
-		
 		return qrCodeResult.getText();
 	}
-	
-	
-
 }

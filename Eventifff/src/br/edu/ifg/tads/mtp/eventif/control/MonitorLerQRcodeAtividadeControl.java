@@ -15,6 +15,5 @@ public class MonitorLerQRcodeAtividadeControl {
 		inter.setBounds(0, 60, 640, 70);
 		appView.add(inter);
 		appView.moveToFront(inter);
-		
 	}
 }
