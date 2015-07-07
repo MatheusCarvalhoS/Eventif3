@@ -12,6 +12,11 @@ import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 
 public class AlunoDAO {
+	/*
+	public boolean verificaCPF(){
+		
+		return verifica;
+	}*/
 	public boolean adiconaAluno(AlunoModel aluno) {
 		boolean retorno = true;
 		String sql = "insert into aluno (idPessoa, senha) values(?,?)";
@@ -197,10 +202,12 @@ public class AlunoDAO {
 			stmt.setString(2, senha);
 			stmt.executeQuery();
 			ResultSet result = stmt.executeQuery();
-			idAluno = result.getInt("idAluno");
+			if(result.next()){
+				idAluno = result.getInt("idAluno");
+			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,
-					"Verifique CPF e Senha! " + e.getMessage());
+					"Verifique CPF e/ou Senha!");
 		} finally {
 			try {
 				con.close();

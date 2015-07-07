@@ -107,10 +107,12 @@ public class MonitorDAO {
 			stmt.setString(2, senha);
 			stmt.executeQuery();
 			ResultSet result = stmt.executeQuery();
-			idMonitor = result.getInt("idMonitor");
+			if(result.next()){
+				idMonitor = result.getInt("idMonitor");
+			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,
-					"Verifique CPF e Senha! " + e.getMessage());
+					"Verifique CPF e/ou Senha!");
 		} finally {
 			try {
 				con.close();

@@ -13,7 +13,7 @@ import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 
 public class GerenteDAO {	
 	public int verificaLogin(String cpf, String senha){
-		String sql = "select idPessoa from gerente g inner join pessoa p on g.idPessoa = p.idPessoa where(p.cpf=? and g.senha=?);";
+		String sql = "select g.idPessoa as id from gerente g inner join pessoa p on g.idPessoa = p.idPessoa where(p.cpf=? and g.senha=?);";
 		Connection con = null;
 		int idGerente=0;
 		try {
@@ -21,12 +21,15 @@ public class GerenteDAO {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
 			stmt.setString(2, senha);
-			stmt.executeQuery();
 			ResultSet result = stmt.executeQuery();
-			idGerente = result.getInt("idPessoa");
+			if(result.next()){
+				idGerente = result.getInt("id");
+				System.out.println("Id que ele tá trazendo: "+idGerente);
+			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,
-					"Verifique CPF e Senha! " + e.getMessage());
+					"Verifique CPF e/ou Senha!");
+			e.printStackTrace();
 		} finally {
 			try {
 				con.close();

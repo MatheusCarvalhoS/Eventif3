@@ -46,9 +46,10 @@ public class LoginControl {
 						.getVerificaCamposCriarLogin(login)) {
 					String cpf = login.getTxCpf().getText().replace(".", "")
 							.replace("-", "");
-					String senha = null;
+					String senha = "";
 					try {
 						senha = new MD5().gerarSenha(login.getTfSenha().getText());
+						System.out.println("Senha: "+senha);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -63,15 +64,15 @@ public class LoginControl {
 					int idAluno = 0;
 					int idMonitor = 0;
 					int idGerente = 0;
-					if(validacao & text.equals("Participante") & (idAluno=new AlunoDAO().verificaLogin(cpf, senha)) ==0 ){
+					if(validacao && text.equals("Participante") && (idAluno=new AlunoDAO().verificaLogin(cpf, senha))==0){
 						validacao=false;
-					}else if(validacao & text.equals("Monitor (a)") & (idMonitor = new MonitorDAO().verificaLogin(cpf, senha)) ==0 ){
+					}else if(validacao && text.equals("Monitor (a)") && (idMonitor = new MonitorDAO().verificaLogin(cpf, senha))==0){
 						validacao=false;
-					}else if(validacao & text.equals("Gerente") & (idGerente=new GerenteDAO().verificaLogin(cpf, senha)) ==0 ){
+					}else if(validacao && text.equals("Gerente") && (idGerente=new GerenteDAO().verificaLogin(cpf, senha)) ==0 ){
 						validacao=false;
 					}
 
-					if (text.equals("Gerente") & validacao) {
+					if (validacao & text.equals("Gerente")) {
 						gerente = new GerenteModel();
 						gerente.setCpf(cpf);
 						gerente.setSenha(senha);
@@ -86,7 +87,7 @@ public class LoginControl {
 								.add(new GerenteListarEventoControl()
 										.getGerenteListarEventoControl(appView));
 						appView.getPainelDireita().repaint();
-					} else if (text.equals("Monitor (a)") & validacao) {
+					} else if (validacao & text.equals("Monitor (a)")) {
 						monitor = new MonitorModel();
 						monitor.setCpf(cpf);
 						monitor.setSenha(senha);
@@ -104,7 +105,7 @@ public class LoginControl {
 
 						appView.getPainelDireita().repaint();
 						appView.getPainelEsquerda().repaint();
-					} else if (text.equals("Participante") & validacao) {
+					} else if (validacao & text.equals("Participante")) {
 						aluno = new AlunoModel();
 						aluno.setCpf(cpf);
 						aluno.setSenha(senha);
@@ -124,8 +125,7 @@ public class LoginControl {
 						appView.getPainelEsquerda().repaint();
 					}
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Verifique o preenchimento dos Campos.");
+					JOptionPane.showMessageDialog(null,"Verifique o preenchimento dos Campos.");
 					login.getTxCpf().setText("");
 					login.getTfSenha().setText("");
 				}
