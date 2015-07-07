@@ -132,7 +132,7 @@ public class AlunoListarAtividadeControl {
 				String situacao = listarAtividade.getTable()
 						.getValueAt(listarAtividade.getTable().getSelectedRow(), 10).toString();
 				
-				if(situacao.equals("Inscrito") & new AlunoDAO().sairDeAtividade(aluno.getIdAluno(), idAtividade)){
+				if(situacao.equals("Inscrito") && new AlunoDAO().sairDeAtividade(aluno.getIdAluno(), idAtividade)){
 					JOptionPane.showMessageDialog(null, "O aluno foi desvinculado da atividade!");
 					appView.getPainelDireita().removeAll();
 					appView.getPainelDireita().add(

@@ -73,7 +73,7 @@ public class AlunoDAO {
 	
 	public boolean sairDeAtividade(int idAluno, int idAtividade){
 		boolean retorno = true;
-		String sql = "delete from alunoEvento where idAluno=? and idAtividade=?";
+		String sql = "delete from alunoAtividade where idAluno=? and idAtividade=?";
 		Connection con = null;
 		try {
 			con = new ConnectionFactory().getConnection();
