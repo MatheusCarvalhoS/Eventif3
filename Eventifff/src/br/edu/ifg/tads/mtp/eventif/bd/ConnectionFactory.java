@@ -10,7 +10,7 @@ public class ConnectionFactory {
 	public Connection getConnection() {
 		Connection con = null;
 		try {
-			con = DriverManager.getConnection("jdbc:postgresql://192.168.43.137:5432/eventif","postgres","1234");
+			con = DriverManager.getConnection("jdbc:postgresql://192.168.2.112:5432/eventif","postgres","1234");
 			System.out.println("Conectado!");
 		} catch (SQLException e) {
 			e.printStackTrace();

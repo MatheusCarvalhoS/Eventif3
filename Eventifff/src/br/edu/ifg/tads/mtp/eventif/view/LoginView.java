@@ -55,6 +55,9 @@ public class LoginView {
 		return painel;
 	}
 
+	
+	
+	
 	public JPanel getPainel() {
 		return painel;
 	}

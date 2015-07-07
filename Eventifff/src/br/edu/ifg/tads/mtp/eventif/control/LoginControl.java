@@ -16,6 +16,7 @@ import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposLogin;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
 import br.edu.ifg.tads.mtp.eventif.view.LoginView;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -26,9 +27,14 @@ public class LoginControl {
 	private GerenteModel gerente;
 	private MonitorModel monitor;
 	private AlunoModel aluno;
+	private JButton btSair;
 
 	public JPanel getLoginControl(AppView app) {
+		btSair = new JButton("Sair");
+		btSair.setBounds(1000,30,100,25);
+		
 		this.appView = app;
+		
 		login = new LoginView();
 		painel = login.getPainelLogin();
 		adicionaEventos();
@@ -36,7 +42,24 @@ public class LoginControl {
 	}
 
 	public void adicionaEventos() {
-		// Evento no botão OK que não faz nada
+	
+		btSair.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				appView.getPainelDireita().removeAll();
+				appView.getPainelEsquerda().removeAll();
+				
+				appView.getPainelDireita().add(new LoginControl().getLoginControl(appView));
+				appView.getPainelEsquerda().add(new MenuPrincipalControl().getMenuPrincipalControl(appView));
+				appView.getPainelSuperior().remove(btSair);
+				
+				appView.getPainelSuperior().repaint();
+				appView.getPainelDireita().repaint();
+				appView.getPainelEsquerda().repaint();
+			}
+		});
+		
+		
 		login.getBtnOk().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -56,8 +79,6 @@ public class LoginControl {
 							System.out.println("Senha: "+senha);
 						} catch (Exception e) {
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null,
-									"Senha n foi criada: "+senha);
 						}
 					}else{
 						validacao = false;
@@ -76,9 +97,10 @@ public class LoginControl {
 					
 					if(!validacao){
 						JOptionPane.showMessageDialog(null,
-								"Verifique CPF e/ou Senha!");
+								"Verifique CPF e/ou Senha, Ou verifique se o "+text+" está Cadastrado!");
 						
 					}else if (text.equals("Gerente")) {
+						appView.getPainelSuperior().add(btSair);
 						gerente = new GerenteModel();
 						gerente.setCpf(cpf);
 						gerente.setSenha(senha);
@@ -94,6 +116,7 @@ public class LoginControl {
 										.getGerenteListarEventoControl(appView));
 						appView.getPainelDireita().repaint();
 					} else if (text.equals("Monitor (a)")) {
+						appView.getPainelSuperior().add(btSair);
 						monitor = new MonitorModel();
 						monitor.setCpf(cpf);
 						monitor.setSenha(senha);
@@ -112,6 +135,7 @@ public class LoginControl {
 						appView.getPainelDireita().repaint();
 						appView.getPainelEsquerda().repaint();
 					} else if (text.equals("Participante")) {
+						appView.getPainelSuperior().add(btSair);
 						aluno = new AlunoModel();
 						aluno.setCpf(cpf);
 						aluno.setSenha(senha);
