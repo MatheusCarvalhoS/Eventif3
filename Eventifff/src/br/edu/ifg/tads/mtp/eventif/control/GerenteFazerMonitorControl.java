@@ -6,7 +6,7 @@ import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAlunosView;
 
 public class GerenteFazerMonitorControl {
 	
-	public void getGerenteFazerMonitorControl(int idMonitor, int idAtividade){ 
-		new MonitorDAO().adicionaMonitor(idMonitor, idAtividade);
+	public void getGerenteFazerMonitorControl(int idAluno, int idAtividade){ 
+		new MonitorDAO().adicionaMonitor(idAluno, idAtividade);
 	}
 }
