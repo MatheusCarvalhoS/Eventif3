@@ -15,7 +15,7 @@ public class GerenteDAO {
 	public int verificaLogin(String cpf, String senha){
 		String sql = "select g.idPessoa as id from gerente g inner join pessoa p on g.idPessoa = p.idPessoa where(p.cpf=? and g.senha=?);";
 		Connection con = null;
-		int idGerente=0;
+		int idGerente=-1;
 		try {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = con.prepareStatement(sql);
@@ -27,8 +27,7 @@ public class GerenteDAO {
 				System.out.println("Id que ele tá trazendo: "+idGerente);
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,
-					"Verifique CPF e/ou Senha!");
+			
 			e.printStackTrace();
 		} finally {
 			try {

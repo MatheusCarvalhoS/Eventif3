@@ -192,22 +192,20 @@ public class AlunoDAO {
 	}
 	
 	public int verificaLogin(String cpf, String senha){
-		String sql = "select idAluno aluno a inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and a.senha=?);";
+		String sql = "select idAluno from aluno a inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and a.senha=?);";
 		Connection con = null;
-		int idAluno=0;
+		int idAluno=-1;
 		try {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
 			stmt.setString(2, senha);
-			stmt.executeQuery();
 			ResultSet result = stmt.executeQuery();
 			if(result.next()){
 				idAluno = result.getInt("idAluno");
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,
-					"Verifique CPF e/ou Senha!");
+			
 		} finally {
 			try {
 				con.close();

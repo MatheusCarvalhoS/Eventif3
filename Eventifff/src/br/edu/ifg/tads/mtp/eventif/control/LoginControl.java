@@ -42,37 +42,43 @@ public class LoginControl {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean validacao = true;
 				String text = (String) login.getCombo().getSelectedItem();
-				if (new VerificaCamposLogin()
-						.getVerificaCamposCriarLogin(login)) {
+				int idAluno = -1;
+				int idMonitor = -1;
+				int idGerente = -1;
+				if (new VerificaCamposLogin().getVerificaCamposCriarLogin(login)) {
 					String cpf = login.getTxCpf().getText().replace(".", "")
 							.replace("-", "");
 					String senha = "";
-					try {
-						senha = new MD5().gerarSenha(login.getTfSenha().getText());
-						System.out.println("Senha: "+senha);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
 					
-					if (!new ValidacaoCPF().validaCpf(cpf)) {
+					if (new ValidacaoCPF().validaCpf(cpf)) {
+						try {
+							senha = new MD5().gerarSenha(login.getTfSenha().getText());
+							System.out.println("Senha: "+senha);
+						} catch (Exception e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null,
+									"Senha n foi criada: "+senha);
+						}
+					}else{
 						validacao = false;
 						JOptionPane.showMessageDialog(null, "CPF inválido!");
 						login.getTxCpf().setText("");
 						login.getTfSenha().setText("");
 					}
 					
-					int idAluno = 0;
-					int idMonitor = 0;
-					int idGerente = 0;
-					if(validacao && text.equals("Participante") && (idAluno=new AlunoDAO().verificaLogin(cpf, senha))==0){
+					if(validacao && text.equals("Participante") && (idAluno=new AlunoDAO().verificaLogin(cpf, senha))==-1){
 						validacao=false;
-					}else if(validacao && text.equals("Monitor (a)") && (idMonitor = new MonitorDAO().verificaLogin(cpf, senha))==0){
+					}else if(validacao && text.equals("Monitor (a)") && (idMonitor = new MonitorDAO().verificaLogin(cpf, senha))==-1){
 						validacao=false;
-					}else if(validacao && text.equals("Gerente") && (idGerente=new GerenteDAO().verificaLogin(cpf, senha)) ==0 ){
+					}else if(validacao && text.equals("Gerente") && (idGerente=new GerenteDAO().verificaLogin(cpf, senha))==-1){
 						validacao=false;
 					}
-
-					if (validacao & text.equals("Gerente")) {
+					
+					if(!validacao){
+						JOptionPane.showMessageDialog(null,
+								"Verifique CPF e/ou Senha!");
+						
+					}else if (text.equals("Gerente")) {
 						gerente = new GerenteModel();
 						gerente.setCpf(cpf);
 						gerente.setSenha(senha);
@@ -87,7 +93,7 @@ public class LoginControl {
 								.add(new GerenteListarEventoControl()
 										.getGerenteListarEventoControl(appView));
 						appView.getPainelDireita().repaint();
-					} else if (validacao & text.equals("Monitor (a)")) {
+					} else if (text.equals("Monitor (a)")) {
 						monitor = new MonitorModel();
 						monitor.setCpf(cpf);
 						monitor.setSenha(senha);
@@ -105,7 +111,7 @@ public class LoginControl {
 
 						appView.getPainelDireita().repaint();
 						appView.getPainelEsquerda().repaint();
-					} else if (validacao & text.equals("Participante")) {
+					} else if (text.equals("Participante")) {
 						aluno = new AlunoModel();
 						aluno.setCpf(cpf);
 						aluno.setSenha(senha);
@@ -114,12 +120,13 @@ public class LoginControl {
 						appView.getPainelEsquerda().removeAll();
 						appView.getPainelDireita().removeAll();
 
-						/*appView.getPainelEsquerda()
-								.add(new MenuPrincipalMonitorControl()
-										.getMenuPrincipalMonitorControl(appView));*/
 						appView.getPainelDireita()
 								.add(new AlunoListarEventoControl()
 										.getAlunoListarEventoControl(appView, aluno.getIdAluno()));
+						
+						appView.getPainelEsquerda()
+						.add(new MenuPrincipalAlunoControl()
+								.getMenuPrincipalAlunoControl(appView, aluno.getIdAluno()));
 
 						appView.getPainelDireita().repaint();
 						appView.getPainelEsquerda().repaint();

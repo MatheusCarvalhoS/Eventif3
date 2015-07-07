@@ -20,8 +20,6 @@ public class MenuPrincipalMonitorControl {
 		this.idMonitor=idMonitor;
 		menuMonitor = new MenuPrincipalMonitorView();
 		menu = menuMonitor.getMenuPrincipalMonitorView();
-		
-		
 		adicionaEventos();
 		return menu;
 	}

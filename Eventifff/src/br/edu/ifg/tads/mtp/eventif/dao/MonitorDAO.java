@@ -99,20 +99,18 @@ public class MonitorDAO {
 	public int verificaLogin(String cpf, String senha){
 		String sql = "select idMonitor from monitor m inner join aluno a on m.idAluno=a.idAluno inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and m.senha=?);";
 		Connection con = null;
-		int idMonitor=0;
+		int idMonitor=-1;
 		try {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
 			stmt.setString(2, senha);
-			stmt.executeQuery();
 			ResultSet result = stmt.executeQuery();
 			if(result.next()){
 				idMonitor = result.getInt("idMonitor");
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,
-					"Verifique CPF e/ou Senha!");
+			
 		} finally {
 			try {
 				con.close();

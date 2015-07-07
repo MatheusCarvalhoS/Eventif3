@@ -94,7 +94,7 @@ public class PessoaInscricaoSistemaControl {
 							if(new AlunoDAO().adiconaAluno(aluno)){
 								JOptionPane.showMessageDialog(null, "Aluno inscrito com sucesso, CPF: "+aluno.getCpf());
 								appView.getPainelDireita().removeAll();
-								//appView.getPainelDireita().add(new AlunoListarEventoControl().getAlunoListarEventoControl(appView));
+								appView.getPainelDireita().add(new LoginControl().getLoginControl(appView));
 								appView.getPainelDireita().repaint();
 							}
 						}
