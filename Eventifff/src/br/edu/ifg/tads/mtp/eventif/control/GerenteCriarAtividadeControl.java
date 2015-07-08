@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.AtividadeDAO;
 import br.edu.ifg.tads.mtp.eventif.model.AtividadeModel;
-import br.edu.ifg.tads.mtp.eventif.util.Dispatcher;
-import br.edu.ifg.tads.mtp.eventif.util.Listener;
 import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposCriarAtividade;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarAtividadeView;
 

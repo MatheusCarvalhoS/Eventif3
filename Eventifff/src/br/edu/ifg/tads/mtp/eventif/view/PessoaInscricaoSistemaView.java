@@ -3,13 +3,11 @@ package br.edu.ifg.tads.mtp.eventif.view;
 import java.awt.Color;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
 
 import br.edu.ifg.tads.mtp.eventif.util.FormatadorMascara;
 

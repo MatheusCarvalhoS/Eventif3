@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
-import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.PessoaModel;
 
 public class PessoaDAO {

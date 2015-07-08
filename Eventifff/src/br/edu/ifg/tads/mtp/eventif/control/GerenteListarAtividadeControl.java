@@ -5,25 +5,14 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.AtividadeDAO;
-import br.edu.ifg.tads.mtp.eventif.dao.EventoDAO;
-import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
-import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
-import br.edu.ifg.tads.mtp.eventif.util.ButtonColumn;
-import br.edu.ifg.tads.mtp.eventif.util.Dispatcher;
-import br.edu.ifg.tads.mtp.eventif.util.Listener;
-import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposCriarEvento;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarEventoView;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAtividadeView;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteListarEventoView;
 
 public class GerenteListarAtividadeControl {
 	private GerenteListarAtividadeView listarAtividade;

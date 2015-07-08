@@ -1,7 +1,6 @@
 package br.edu.ifg.tads.mtp.eventif.util;
 
 import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarAtividadeView;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarEventoView;
 
 public class VerificaCamposCriarAtividade {
 	public boolean getVerificaCamposCriarAtividade(GerenteCriarAtividadeView atividadeView){

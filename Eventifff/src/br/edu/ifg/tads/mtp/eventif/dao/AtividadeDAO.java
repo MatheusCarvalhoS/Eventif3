@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 import br.edu.ifg.tads.mtp.eventif.model.AtividadeModel;
-import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
 
 public class AtividadeDAO {
 	

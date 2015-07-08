@@ -1,6 +1,5 @@
 package br.edu.ifg.tads.mtp.eventif.util;
 
-import java.util.InputMismatchException;
 
 import br.edu.ifg.tads.mtp.eventif.view.PessoaInscricaoSistemaView;
 

@@ -1,10 +1,8 @@
 package br.edu.ifg.tads.mtp.eventif.view;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;

@@ -4,24 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-import javax.swing.Action;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.AtividadeDAO;
-import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
-import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAtividadeView;
 import br.edu.ifg.tads.mtp.eventif.view.MonitorListarAtividadeView;
 
 public class MonitorListarAtividadeControl {
 	private MonitorListarAtividadeView listarAtividade;
 	private JPanel painel;
-	private Action alterar;
-	private Action excluir;
-	private Action addAtividade;
 	private AppView appView;
 	private int idEvento;
 	

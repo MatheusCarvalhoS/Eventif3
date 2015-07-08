@@ -10,13 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.AlunoDAO;
-import br.edu.ifg.tads.mtp.eventif.dao.EventoDAO;
-import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
-import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
-import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposCriarEvento;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarEventoView;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAlunosView;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteListarEventoView;
 
 public class GerenteListarAlunosControl {
 	private GerenteListarAlunosView listarAluno;

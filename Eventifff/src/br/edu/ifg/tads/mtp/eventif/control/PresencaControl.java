@@ -20,7 +20,7 @@ public class PresencaControl {
 				}
 			}else if(tipo.equals("atividade")){
 				/*
-				if(new PresencaDAO().verificaChekinChekoutEvento(idAluno, id).equals("chekin")){
+				if(new PresencaDAO().verificaChekinChekoutAtividade(idAluno, id).equals("checkin")){
 					new PresencaDAO().chekinAtividade(idAluno, id);
 				}else if(PresencaDAO().verificaChekinChekoutAtividade(idAluno).equals("checkout")){
 					new PresencaDAO().chekoutAtividade(idAluno, id);

@@ -39,6 +39,7 @@ public class PessoaInscricaoSistemaControl {
 	public void adicionaEventos(){
 		
 		inscreverPessoa.getBtInscrever().addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				if(new VerificaCamposPessoaInscricao().getVerificaCamposPessoaInscricao(inscreverPessoa)){
 					boolean validacao = true;
@@ -62,7 +63,9 @@ public class PessoaInscricaoSistemaControl {
 					}else{
 					
 						try {
-							new CriarQRCode().getCriarQRCode(cpf);
+							new CriarQRCode();
+							CriarQRCode.getCriarQRCode(cpf);
+							
 							aluno.setCpf(cpf);
 							aluno.setRg(inscreverPessoa.getTxRg().getText());
 							String senha = null;

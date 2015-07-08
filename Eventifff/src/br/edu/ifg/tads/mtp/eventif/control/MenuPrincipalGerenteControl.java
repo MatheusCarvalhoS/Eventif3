@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import br.edu.ifg.tads.mtp.eventif.dao.AlunoDAO;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
 import br.edu.ifg.tads.mtp.eventif.view.MenuPrincipalGerenteView;
 

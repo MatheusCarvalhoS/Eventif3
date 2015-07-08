@@ -1,10 +1,8 @@
 package br.edu.ifg.tads.mtp.eventif.view;
 
 import java.awt.Color;
-import java.awt.TextField;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

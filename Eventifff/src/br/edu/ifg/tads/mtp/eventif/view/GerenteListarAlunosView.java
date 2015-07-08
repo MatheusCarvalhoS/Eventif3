@@ -2,15 +2,8 @@ package br.edu.ifg.tads.mtp.eventif.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
-import br.edu.ifg.tads.mtp.eventif.control.GVizualizarEventoControl;
-import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
 
 public class GerenteListarAlunosView {
 	private JPanel painel;
