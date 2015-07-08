@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 
 public class PresencaDAO {
-	public int getIdPessoaCPF(String cpf, int id){
+	public int getIdPessoaCPF(String cpf){
 		int idPessoa=0;
 		String sql = "select idPessoa as id from pessoa where (cpf=?)";
 		Connection con = null;
@@ -24,7 +24,7 @@ public class PresencaDAO {
 				idPessoa=result.getInt("id");
 			}
 		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Não foi possível realizar esta operação"+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Não foi possível realizar esta operação! "+e.getMessage());
 		} finally{
 			try{
 				con.close();
@@ -43,29 +43,42 @@ public class PresencaDAO {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt1 = con.prepareStatement(sql1);
 			stmt1.setInt(1, idAluno);
-			stmt1.setInt(1, idEvento);
+			stmt1.setInt(2, idEvento);
+			
 			ResultSet result = stmt1.executeQuery();
+			
 			if(result.next()){
+				idAluno = result.getInt("id");
+				System.out.println("entrei idAluno = "+idAluno);
+				
 				String sql2 = "select pE.horaCheckin as entrada, pE.horaCheckout as saida from presencaEvento as pE "
 						+ "where(pE.idPresencaEvento = (select max(idPresencaEvento) from presencaEvento "
 						+ "where (idAluno=? and idEvento=?)) and pE.idAluno=? and pE.idEvento=?)";
 				PreparedStatement stmt2 = con.prepareStatement(sql2);
 				stmt2.setInt(1, idAluno);
-				stmt2.setInt(1, idEvento);
+				stmt2.setInt(2, idEvento);
+				stmt2.setInt(3, idAluno);
+				stmt2.setInt(4, idEvento);
+				
+				
 				ResultSet result2 = stmt2.executeQuery();
 				
 				if(result2.next()){
-					if(result2.getTimestamp("entrada").equals(null)){
-						resultado = "checkin";
-					}else if(result2.getTimestamp("saida").equals(null)){
+					
+					if(result2.getTimestamp("saida") == null){
 						resultado = "checkout";
+					}else if(result2.getTimestamp("entrada") == null){
+						resultado = "checkin";
 					}else{
+						System.out.println("entrei não sei");
 						resultado = "checkin";
 					}
+				}else{
+					resultado = "checkin";
 				}
 			}
 		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Não foi possível realizar esta operação"+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Não foi possível realizar esta operação! "+e.getMessage());
 		} finally{
 			try{
 				con.close();
@@ -77,7 +90,7 @@ public class PresencaDAO {
 	}
 	
 	public void chekinEvento(int idAluno, int idEvento){
-		String sql = "insert into presencaEvento(horaChekin, idAluno, idEvento) values(current_Timestamp, ?, ?))";
+		String sql = "insert into presencaEvento(horaCheckin, idAluno, idEvento) values(current_Timestamp, ?, ?)";
 		Connection con = null;
 		try{
 			con = new ConnectionFactory().getConnection();

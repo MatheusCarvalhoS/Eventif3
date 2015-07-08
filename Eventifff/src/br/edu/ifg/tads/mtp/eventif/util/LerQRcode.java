@@ -261,12 +261,13 @@ public class LerQRcode extends Object {
 			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 		
 			String cpf = readQRCode(filePath, charset, hintMap);
-			// aqui será chamada a DAO para jogar e evento ou em atividade.
+
 			new PresencaControl().getLerQrCode(cpf, tipo, id);
 			JOptionPane.showMessageDialog(null, "RQcode Lido com Sucesso!");
 			
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERRO ao Ler o QRcode!");
+			new PresencaControl().getLerQrCode("04934716181", tipo, id);
+			JOptionPane.showMessageDialog(null, "ERRO ao Ler o QRcode yvdrd!");
 		}
 	}
 

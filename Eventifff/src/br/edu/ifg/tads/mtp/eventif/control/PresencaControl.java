@@ -6,10 +6,11 @@ import br.edu.ifg.tads.mtp.eventif.dao.PresencaDAO;
 
 public class PresencaControl {
 	public void getLerQrCode(String cpf, String tipo, int id){
-		int idAluno = new PresencaDAO().getIdPessoaCPF(cpf, id);
+		int idAluno = new PresencaDAO().getIdPessoaCPF(cpf);
+		System.out.println("idAluno: "+ idAluno);
 		if(idAluno!=0){
 			if(tipo.equals("evento")){
-				if(new PresencaDAO().verificaChekinChekoutEvento(idAluno, id).equals("chekin")){
+				if(new PresencaDAO().verificaChekinChekoutEvento(idAluno, id).equals("checkin")){
 					//A função acima deverá verificar se o aluno está inscrito no evento
 					new PresencaDAO().chekinEvento(idAluno, id);
 				}else if(new PresencaDAO().verificaChekinChekoutEvento(idAluno, id).equals("checkout")){
