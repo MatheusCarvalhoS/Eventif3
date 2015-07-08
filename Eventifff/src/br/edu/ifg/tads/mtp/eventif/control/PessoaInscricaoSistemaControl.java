@@ -61,27 +61,36 @@ public class PessoaInscricaoSistemaControl {
 						validacao = false;
 						JOptionPane.showMessageDialog(null, "Senhas não conferem!");
 					}else{
-					
-						try {
-							new CriarQRCode();
-							CriarQRCode.getCriarQRCode(cpf);
-							
-							aluno.setCpf(cpf);
-							aluno.setRg(inscreverPessoa.getTxRg().getText());
-							String senha = null;
+						if(new PessoaDAO().verificaExistencia(cpf)){
+							if(new PessoaDAO().verificaAtivo(cpf)){
+								JOptionPane.showMessageDialog(null, "Já existe participante com CPF: "+cpf);
+								validacao = false;
+							}else{
+								JOptionPane.showMessageDialog(null, "Aluno já cadastrado no sistema, deseja reativá-lo?");
+								//Colocar JOptionPane para confirmar reativação==================================================================================ldkfjhgnuosnhsdgbfnjshgugfdsujhsjjufh
+								new PessoaDAO().reativaPessoa(cpf);
+								validacao = false;
+							}
+						}else{
 							try {
-								senha = new MD5().gerarSenha(inscreverPessoa.getTxSenha().getText());
-							} catch (Exception e) {
+								new CriarQRCode();
+								CriarQRCode.getCriarQRCode(cpf);
+								aluno.setCpf(cpf);
+								aluno.setRg(inscreverPessoa.getTxRg().getText());
+								String senha = null;
+								try {
+									senha = new MD5().gerarSenha(inscreverPessoa.getTxSenha().getText());
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								aluno.setSenha(senha);
+								JOptionPane.showMessageDialog(null, "QRcode Gerado com Sucesso! ");
+							} catch (NotFoundException | WriterException
+									| IOException e) {
+								JOptionPane.showMessageDialog(null, "Erro ao criar o QrCode! "+ e.getMessage());
 								e.printStackTrace();
 							}
-							aluno.setSenha(senha);
-							JOptionPane.showMessageDialog(null, "QRcode Gerado com Sucesso! ");
-						} catch (NotFoundException | WriterException
-								| IOException e) {
-							JOptionPane.showMessageDialog(null, "Erro ao criar o QrCode! "+ e.getMessage());
-							e.printStackTrace();
 						}
-						
 					}
 					
 					if(!validacao){

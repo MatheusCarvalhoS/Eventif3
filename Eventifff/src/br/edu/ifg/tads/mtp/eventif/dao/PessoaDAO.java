@@ -57,5 +57,72 @@ public class PessoaDAO {
 		}
 		return retorno;
 	}
+	
+	public boolean verificaExistencia(String cpf){
+		String sql = "select idPessoa from pessoa where(cpf=?);";
+		Connection con = null;
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, cpf);
+			ResultSet result = stmt.executeQuery();
+			if(result.next()){
+				return true;
+			}
+		}catch(Exception e){
+		} finally{
+			try{
+				con.close();
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+		return false;
+	}
+	
+	public boolean verificaAtivo(String cpf){
+		String sql = "select ativo from pessoa where(cpf=?);";
+		Connection con = null;
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, cpf);
+			ResultSet result = stmt.executeQuery();
+			if(result.next() && result.getBoolean("ativo")){
+				return true;
+			}
+		}catch(Exception e){
+			
+		} finally{
+			try{
+				con.close();
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+		return false;
+	}
+	
+	public boolean reativaPessoa(String cpf){
+		String sql = "update pessoa set ativo = 'true' where(cpf=?);";
+		Connection con = null;
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, cpf);
+			ResultSet result = stmt.executeQuery();
+			if(result.next()){
+				return true;
+			}
+		}catch(Exception e){
+		} finally{
+			try{
+				con.close();
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+		return false;
+	}
 }
 

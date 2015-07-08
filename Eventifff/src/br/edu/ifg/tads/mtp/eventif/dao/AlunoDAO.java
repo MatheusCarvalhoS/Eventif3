@@ -12,11 +12,40 @@ import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 
 public class AlunoDAO {
-	/*
-	public boolean verificaCPF(){
+	public AlunoModel getAlunoMinhaConta(int idAluno){
+		AlunoModel aluno = new AlunoModel();
+		aluno.setIdAluno(idAluno);
+		String sql1 = "select * from aluno where idAluno=?";
+		String sql2 = "select * from pessoa where idPessoa=?";
+		Connection con = null;
 		
-		return verifica;
-	}*/
+		try {
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql1);
+			stmt.setInt(1, aluno.getIdAluno());
+			ResultSet result1 = stmt.executeQuery();
+			if(result1.next()){
+				aluno.setNomePessoa(result1.getString("nomePessoa"));
+				aluno.setCpf(result1.getString("cpf"));
+				aluno.setAtivo(result1.getBoolean("ativo"));
+				aluno.setRg(result1.getString("rg"));
+				aluno.setIdEndereco(result1.getInt("idEndereco"));
+				aluno.setSenha(result1.getString("senha"));//----------------------------------------------Ver aqui
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Não deu pra inserir " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null,
+						"Deu merda, não deu pra fechar");
+			}
+		}
+		return aluno;
+	}
+	
 	public boolean adiconaAluno(AlunoModel aluno) {
 		boolean retorno = true;
 		String sql = "insert into aluno (idPessoa, senha) values(?,?)";
