@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
+import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
 
 public class EnderecoDAO {
+	private EnderecoModel endereco;
+
 	public boolean adiconaEndereco(EnderecoModel endereco){
 		boolean retorno=true;
 		String sql = "insert into endereco (numero, bairro, cep, cidade, uf) values(?,?,?,?,?)";
@@ -62,4 +65,34 @@ public class EnderecoDAO {
 		}
 		return retorno;
 	}
+	
+	public boolean alterarEndereco(EnderecoModel endereco){
+		this.endereco = endereco;
+		String sql = "UPDATE endereco SET numero=?, bairro=?, cep=?, cidade=?, uf=? WHERE(idEndereco = ?)";
+		Connection con = null;
+		
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, endereco.getNumero());
+			stmt.setString(2, endereco.getBairro());
+			stmt.setString(3, endereco.getCep());
+			stmt.setString(4, endereco.getCidade());
+			stmt.setString(5, endereco.getUf());
+			stmt.setInt(6, endereco.getIdEndereco());
+
+			stmt.execute();
+			return true;
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Não foi possível Alterar. "+e.getMessage());
+			return false;
+		} finally{
+			try{
+				con.close();
+			}catch(SQLException e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+	}
+	
 }

@@ -15,8 +15,6 @@ public class VerificaCamposPessoaInscricao {
 			verify = false;
 		} else if (inscircaoView.getTxCep().getText().isEmpty()) {
 			verify = false;
-		} else if (inscircaoView.getTxComplemento().getText().isEmpty()) {
-			verify = false;
 		} else if (inscircaoView.getTxNumero().getText().isEmpty()) {
 			verify = false;
 		} else if (inscircaoView.getTxUf().getText().isEmpty()) {

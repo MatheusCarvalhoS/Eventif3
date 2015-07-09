@@ -22,7 +22,6 @@ public class PessoaInscricaoSistemaView {
 	private JLabel cidade;
 	private JLabel bairro;
 	private JLabel numero;
-	private JLabel complemento;
 	private JLabel senha;
 	private JLabel confirmaSenha;
 
@@ -34,7 +33,6 @@ public class PessoaInscricaoSistemaView {
 	private JTextField txCidade;
 	private JTextField txBairro;
 	private JTextField txNumero;
-	private JTextField txComplemento;
 	private JPasswordField txSenha;
 	private JPasswordField txConfirmaSenha;
 	
@@ -54,7 +52,6 @@ public class PessoaInscricaoSistemaView {
 		cidade = new JLabel("Cidade:");
 		bairro = new JLabel("Bairro:");
 		numero = new JLabel("Numero:");
-		complemento = new JLabel("Complemento:");
 		senha = new JLabel("Senha:");
 		confirmaSenha = new JLabel("Confirme sua Senha:");
 		
@@ -67,7 +64,6 @@ public class PessoaInscricaoSistemaView {
 		txCidade = new JTextField();
 		txBairro = new JTextField();
 		txNumero = new JTextField();
-		txComplemento = new JTextField();
 		txSenha = new JPasswordField();
 		txConfirmaSenha = new JPasswordField();
 		btInscrever = new JButton("Inscrever");
@@ -81,7 +77,6 @@ public class PessoaInscricaoSistemaView {
 		cidade.setBounds(20, 140, 100, 25);
 		bairro.setBounds(20, 185, 100, 25);
 		numero.setBounds(20, 230, 100, 25);
-		complemento.setBounds(20, 275, 110, 25);
 		senha.setBounds(20, 320, 100, 25);
 		confirmaSenha.setBounds(20, 365, 150, 25);
 		
@@ -94,7 +89,6 @@ public class PessoaInscricaoSistemaView {
 		txCidade.setBounds(20, 160, 300, 25);
 		txBairro.setBounds(20, 205, 300, 25);
 		txNumero.setBounds(20, 250, 100, 25);
-		txComplemento.setBounds(20, 296, 400, 25);
 		txSenha.setBounds(20, 340, 200, 25);
 		txConfirmaSenha.setBounds(20, 385, 200, 25);
 		btInscrever.setBounds(570, 540, 150, 25);
@@ -108,7 +102,6 @@ public class PessoaInscricaoSistemaView {
 		painel.add(cidade);
 		painel.add(bairro);
 		painel.add(numero);
-		painel.add(complemento);
 		painel.add(senha);
 		painel.add(confirmaSenha);
 		
@@ -120,7 +113,6 @@ public class PessoaInscricaoSistemaView {
 		painel.add(txCidade);
 		painel.add(txBairro);
 		painel.add(txNumero);
-		painel.add(txComplemento);
 		painel.add(txSenha);
 		painel.add(txConfirmaSenha);
 		
@@ -186,12 +178,20 @@ public class PessoaInscricaoSistemaView {
 		this.txNumero = txNumero;
 	}
 
-	public JTextField getTxComplemento() {
-		return txComplemento;
+	public JLabel getSenha() {
+		return senha;
 	}
 
-	public void setTxComplemento(JTextField txComplemento) {
-		this.txComplemento = txComplemento;
+	public void setSenha(JLabel senha) {
+		this.senha = senha;
+	}
+
+	public JLabel getConfirmaSenha() {
+		return confirmaSenha;
+	}
+
+	public void setConfirmaSenha(JLabel confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
 	}
 
 	public JTextField getTxUf() {

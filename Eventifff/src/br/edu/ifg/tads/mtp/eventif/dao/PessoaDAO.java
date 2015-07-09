@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
+import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.PessoaModel;
 
 public class PessoaDAO {
@@ -124,5 +125,35 @@ public class PessoaDAO {
 		}
 		return false;
 	}
+	
+	public boolean alterarPessoa(AlunoModel aluno){
+		System.out.println(" contato banco == idAluno = "+ aluno.getIdAluno());
+		String sql = "UPDATE pessoa SET nomePessoa=?, cpf=?, rg=? WHERE(idPessoa = ?)";
+		Connection con = null;
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, aluno.getNomePessoa());
+			stmt.setString(2, aluno.getCpf());
+			stmt.setString(3, aluno.getRg());
+			stmt.setInt(4, aluno.getIdAluno());
+			
+			stmt.execute();
+			
+			return true;
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Não foi possível Alterar. "+e.getMessage());
+			return false;
+		} finally{
+			try{
+				con.close();
+			}catch(SQLException e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+	}
+	
+	
+	
 }
 

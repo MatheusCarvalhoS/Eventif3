@@ -10,27 +10,69 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
+import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
 
 public class AlunoDAO {
+	public EnderecoModel getEnderecoMinhaConta(int idEndereco){
+		EnderecoModel endereco = new EnderecoModel();
+		
+		String sql = "select * from endereco where idEndereco=?";
+		Connection con = null;
+		try {
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, idEndereco);
+			ResultSet result = stmt.executeQuery();
+			if(result.next()){
+				endereco.setIdEndereco(result.getInt("idEndereco"));
+				endereco.setNumero(result.getString("numero"));
+				endereco.setBairro(result.getString("bairro"));
+				endereco.setCep(result.getString("cep"));
+				endereco.setCidade(result.getString("cidade"));
+				endereco.setUf(result.getString("uf"));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Não deu pra inserir " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null,
+						"Deu merda, não deu pra fechar");
+			}
+		}
+		return endereco;
+	}
+	
 	public AlunoModel getAlunoMinhaConta(int idAluno){
 		AlunoModel aluno = new AlunoModel();
+		EnderecoModel endereco = new EnderecoModel();
 		aluno.setIdAluno(idAluno);
 		String sql1 = "select * from aluno where idAluno=?";
 		String sql2 = "select * from pessoa where idPessoa=?";
+		String sql3 = "select * from endereco where idEndereco=?";
 		Connection con = null;
 		
 		try {
 			con = new ConnectionFactory().getConnection();
-			PreparedStatement stmt = con.prepareStatement(sql1);
-			stmt.setInt(1, aluno.getIdAluno());
-			ResultSet result1 = stmt.executeQuery();
+			PreparedStatement stmt1 = con.prepareStatement(sql1);
+			stmt1.setInt(1, aluno.getIdAluno());
+			ResultSet result1 = stmt1.executeQuery();
 			if(result1.next()){
-				aluno.setNomePessoa(result1.getString("nomePessoa"));
-				aluno.setCpf(result1.getString("cpf"));
-				aluno.setAtivo(result1.getBoolean("ativo"));
-				aluno.setRg(result1.getString("rg"));
-				aluno.setIdEndereco(result1.getInt("idEndereco"));
-				aluno.setSenha(result1.getString("senha"));//----------------------------------------------Ver aqui
+				aluno.setSenha(result1.getString("senha"));
+				
+				PreparedStatement stmt2 = con.prepareStatement(sql2);
+				stmt2.setInt(1, aluno.getIdAluno());
+				ResultSet result2 = stmt2.executeQuery();
+				if(result2.next()){
+					aluno.setIdAluno(result2.getInt("idPessoa"));
+					aluno.setNomePessoa(result2.getString("nomePessoa"));
+					aluno.setCpf(result2.getString("cpf"));
+					aluno.setAtivo(result2.getBoolean("ativo"));
+					aluno.setRg(result2.getString("rg"));
+					aluno.setIdEndereco(result2.getInt("idEndereco"));
+				}
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
