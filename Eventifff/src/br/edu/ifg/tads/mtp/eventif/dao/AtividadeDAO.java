@@ -17,7 +17,8 @@ public class AtividadeDAO {
 	
 	public boolean adicionaAtividade(AtividadeModel atividade) {
 		boolean retorno = true;
-		String sql = "insert into atividade(idEvento,nomeAtividade,descricaoAtividade,palestrante,horaInicio,horaEncerramento,data,tipoAtividade,cargaHoraria,numeroVagas) values(?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into atividade(idEvento,nomeAtividade,descricaoAtividade,palestrante,horaInicio,horaEncerramento,data,tipoAtividade,cargaHoraria,numeroVagas,vagasDisponiveis) values(?,?,?,?,?,?,?,?,?,?,?)";
+		//Tá dando erro nessa porra
 		Connection con = null;
 		try {
 			// prepared statement para inserção
@@ -35,11 +36,11 @@ public class AtividadeDAO {
 			stmt.setString(8, atividade.getTipoAtividade());
 			stmt.setString(9, atividade.getCargaHoraria());
 			stmt.setInt(10, atividade.getNumeroVagas());
+			stmt.setInt(11, atividade.getNumeroVagas());
 			
 			// executa
 			stmt.execute();
 		} catch (Exception e) {
-
 			retorno = false;
 			throw new RuntimeException(
 					"falha ao tentar executar. "+e.getMessage());

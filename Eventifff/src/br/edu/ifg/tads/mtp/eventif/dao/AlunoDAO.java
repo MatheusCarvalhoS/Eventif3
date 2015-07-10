@@ -201,16 +201,29 @@ public class AlunoDAO {
 	
 	public boolean inscricaoAtividade(int idAluno, int idAtividade){
 		boolean retorno = true;
-		String sql = "insert into alunoAtividade (idAluno, idAtividade) values(?,?)";
+		String sql = "insert into alunoAtividade (idAluno, idAtividade, vagasDisponiveis) values(?,?,?)";
+		String sql1 = "select vagasDisponiveis from atividade where idAtividade = ?";
+		//Criar um campo na tabela atividades como Estoque
 		Connection con = null;
 		try {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = con.prepareStatement(sql);
-
-			stmt.setInt(1, idAluno);
-			stmt.setInt(2, idAtividade);
-
-			stmt.execute();
+			PreparedStatement stmt1 = con.prepareStatement(sql1);
+			stmt1.setInt(1, idAtividade);
+			ResultSet result1 = stmt1.executeQuery();
+			if(result1.next()){
+				int vagasDisponiveis = result1.getInt("vagasDisponiveis");
+				if(vagasDisponiveis>0){
+					vagasDisponiveis--;
+					stmt.setInt(1, idAluno);
+					stmt.setInt(2, idAtividade);
+					stmt.setInt(3, vagasDisponiveis);
+					stmt.execute();
+				}else{
+					JOptionPane.showMessageDialog(null,
+							"Não existem vagas disponíveis");
+				}
+			}
 		} catch (Exception e) {
 			retorno = false;
 		} finally {
