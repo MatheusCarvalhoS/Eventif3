@@ -99,7 +99,7 @@ public class AlunoListarEventoControl {
 				String situacao = listarEvento.getTable()
 						.getValueAt(listarEvento.getTable().getSelectedRow(), 9).toString();
 				
-				if(situacao.equals("Inscrito") & new AlunoDAO().sairDoEvento(aluno.getIdAluno(), idEvento)){
+				if(situacao.equals("Inscrito") && new AlunoDAO().sairDoEvento(aluno.getIdAluno(), idEvento)){
 					JOptionPane.showMessageDialog(null, "O aluno foi desvinculado do Evento!");
 					appView.getPainelDireita().removeAll();
 					appView.getPainelDireita().add(

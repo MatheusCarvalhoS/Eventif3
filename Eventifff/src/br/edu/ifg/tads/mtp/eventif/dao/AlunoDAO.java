@@ -144,16 +144,19 @@ public class AlunoDAO {
 	
 	public boolean sairDeAtividade(int idAluno, int idAtividade){
 		boolean retorno = true;
-		String sql = "delete from alunoAtividade where idAluno=? and idAtividade=?";
+		String sql1 = "delete from alunoAtividade where idAluno=? and idAtividade=?";
+		String sql2 = "update atividade set vagasD=vagasD+1 where idAtividade=?";
 		Connection con = null;
 		try {
 			con = new ConnectionFactory().getConnection();
-			PreparedStatement stmt = con.prepareStatement(sql);
-
-			stmt.setInt(1, idAluno);
-			stmt.setInt(2, idAtividade);
-
-			stmt.execute();
+			PreparedStatement stmt1 = con.prepareStatement(sql1);
+			stmt1.setInt(1, idAluno);
+			stmt1.setInt(2, idAtividade);
+			stmt1.execute();
+			
+			PreparedStatement stmt2 = con.prepareStatement(sql2);
+			stmt2.setInt(1, idAtividade);
+			stmt2.execute();
 		} catch (Exception e) {
 			retorno = false;
 		} finally {
@@ -171,26 +174,36 @@ public class AlunoDAO {
 	public boolean sairDoEvento(int idAluno, int idEvento){
 		boolean retorno = true;
 		String sql1 = "delete from alunoEvento where idAluno=? and idEvento=?";
-		String sql2 = "delete from alunoAtividade as art using atividade as atv where atv.idAtividade=art.idAtividade and idAluno=? and idEvento=?";
+		String sql2 = "delete from alunoAtividade as art using atividade as atv where atv.idAtividade=art.idAtividade and art.idAluno=? and atv.idEvento=?";
+		String sql3 = "select idAtividade from alunoAtividade where (idAluno=?)";
+		String sql4 = "update atividade set vagasD=vagasD+1 where (idAtividade=?);";
+		//Alterar as vagas disponíveis de todas as atividades;
 		Connection con = null;
 		try {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt1 = con.prepareStatement(sql1);
 			PreparedStatement stmt2 = con.prepareStatement(sql2);
-
+			PreparedStatement stmt3 = con.prepareStatement(sql3);
+			PreparedStatement stmt4 = con.prepareStatement(sql4);
+			
 			stmt1.setInt(1, idAluno);
 			stmt1.setInt(2, idEvento);
 			stmt2.setInt(1, idAluno);
 			stmt2.setInt(2, idEvento);
-
+			stmt3.setInt(1, idAluno);
 			stmt1.execute();
+			ResultSet result3 = stmt3.executeQuery();
+			while(result3.next()){
+				stmt4.setInt(1, result3.getInt("idAtividade"));
+				stmt4.execute();
+			}
 			stmt2.execute();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			retorno = false;
 		} finally {
 			try {
 				con.close();
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null,
 						"Deu merda, não deu pra fechar");
 				retorno = false;
@@ -201,37 +214,47 @@ public class AlunoDAO {
 	
 	public boolean inscricaoAtividade(int idAluno, int idAtividade){
 		boolean retorno = true;
-		String sql = "insert into alunoAtividade (idAluno, idAtividade, vagasDisponiveis) values(?,?,?)";
-		String sql1 = "select vagasDisponiveis from atividade where idAtividade = ?";
+		String sql2 = "insert into alunoAtividade (idAluno, idAtividade) values(?,?)";
+		String sql1 = "select vagasD from atividade where (idAtividade = ?);";
+		String sql3 = "update atividade set vagasD=vagasD-1 where (idAtividade=?);";
 		//Criar um campo na tabela atividades como Estoque
 		Connection con = null;
 		try {
 			con = new ConnectionFactory().getConnection();
-			PreparedStatement stmt = con.prepareStatement(sql);
 			PreparedStatement stmt1 = con.prepareStatement(sql1);
+			PreparedStatement stmt2 = con.prepareStatement(sql2);
+			PreparedStatement stmt3 = con.prepareStatement(sql3);
 			stmt1.setInt(1, idAtividade);
 			ResultSet result1 = stmt1.executeQuery();
 			if(result1.next()){
-				int vagasDisponiveis = result1.getInt("vagasDisponiveis");
+				int vagasDisponiveis = result1.getInt("vagasD");
+				System.out.println("Vagas Disponiveis: "+vagasDisponiveis);
 				if(vagasDisponiveis>0){
 					vagasDisponiveis--;
-					stmt.setInt(1, idAluno);
-					stmt.setInt(2, idAtividade);
-					stmt.setInt(3, vagasDisponiveis);
-					stmt.execute();
+					stmt2.setInt(1, idAluno);
+					stmt2.setInt(2, idAtividade);
+					stmt2.execute();
+					stmt3.setInt(1,idAtividade);
+					stmt3.execute();
+					retorno = true;
 				}else{
 					JOptionPane.showMessageDialog(null,
 							"Não existem vagas disponíveis");
+					retorno = false;
 				}
+			}else{
+				JOptionPane.showMessageDialog(null,
+						"Não existe atividade com id: "+idAtividade);
+				retorno = false;
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			retorno = false;
 		} finally {
 			try {
 				con.close();
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null,
-						"Deu merda, não deu pra fechar");
+						"Deu merda, não deu pra fechar. "+e.getMessage());
 				retorno = false;
 			}
 		}

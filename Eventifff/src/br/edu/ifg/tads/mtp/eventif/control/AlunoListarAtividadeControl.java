@@ -82,7 +82,7 @@ public class AlunoListarAtividadeControl {
 				String situacao = listarAtividade.getTable()
 						.getValueAt(listarAtividade.getTable().getSelectedRow(), 10).toString();
 				
-				if(situacaoEvento.equals("Inscrito") & !situacao.equals("Inscrito") & new AlunoDAO().inscricaoAtividade(aluno.getIdAluno(), idAtividade)){
+				if(situacaoEvento.equals("Inscrito") && !situacao.equals("Inscrito") && new AlunoDAO().inscricaoAtividade(aluno.getIdAluno(), idAtividade)){
 					JOptionPane.showMessageDialog(null, "Aluno cadastrado com sucesso na Atividade!");
 					appView.getPainelDireita().removeAll();
 					appView.getPainelDireita().add(
@@ -92,9 +92,6 @@ public class AlunoListarAtividadeControl {
 					JOptionPane.showMessageDialog(null, "Aluno não está inscrito no Evento!");
 				}else if(situacao.equals("Inscrito")){
 					JOptionPane.showMessageDialog(null, "Aluno não pode ser recadastrado na Atividade!");
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Aluno não cadastrado na Atividade!");
 				}
 			}
 		});

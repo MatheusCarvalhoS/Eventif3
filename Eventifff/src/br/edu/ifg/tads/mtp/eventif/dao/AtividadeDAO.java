@@ -17,7 +17,7 @@ public class AtividadeDAO {
 	
 	public boolean adicionaAtividade(AtividadeModel atividade) {
 		boolean retorno = true;
-		String sql = "insert into atividade(idEvento,nomeAtividade,descricaoAtividade,palestrante,horaInicio,horaEncerramento,data,tipoAtividade,cargaHoraria,numeroVagas,vagasDisponiveis) values(?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into atividade(idEvento,nomeAtividade,descricaoAtividade,palestrante,horaInicio,horaEncerramento,data,tipoAtividade,cargaHoraria,numeroVagas,vagasD) values(?,?,?,?,?,?,?,?,?,?,?)";
 		//Tá dando erro nessa porra
 		Connection con = null;
 		try {
