@@ -327,7 +327,7 @@ public class AlunoDAO {
 	public boolean desativarConta(int idAluno){
 		String sql1 = "update pessoa set ativo = false where idPessoa=?";
 		String sql2 = "select idEvento from alunoEvento where idAluno=?";
-		String sql3 = "select idAtividade from monitorAtividade where idMonitor=?";
+		String sql3 = "select ma.idAtividade, ma.idMonitor from monitorAtividade as ma inner join monitor as m on m.idMonitor = ma.idMonitor where m.idAluno=?";
 		Connection con = null;
 		try {
 			con = new ConnectionFactory().getConnection();
@@ -338,15 +338,17 @@ public class AlunoDAO {
 			stmt1.setInt(1, idAluno);
 			stmt2.setInt(1, idAluno);
 			stmt3.setInt(1, idAluno);
+			
 			stmt1.execute();
 			ResultSet result2 = stmt2.executeQuery();
+			
 			while(result2.next()){
 				sairDoEvento(idAluno, result2.getInt("idEvento"));
 			}
 			
 			ResultSet result3 = stmt3.executeQuery();
 			while(result3.next()){
-				new MonitorDAO().sairAtividade(idAluno, result3.getInt("idAtividade"));
+				new MonitorDAO().sairAtividade(result3.getInt("idMonitor"), result3.getInt("idAtividade"));
 			}
 			return true;
 		} catch (SQLException e) {

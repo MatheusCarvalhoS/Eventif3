@@ -155,7 +155,7 @@ public class MonitorDAO {
 	}
 
 	public int verificaLogin(String cpf, String senha) {
-		String sql = "select idMonitor from monitor m inner join aluno a on m.idAluno=a.idAluno inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and m.senha=?);";
+		String sql = "select idMonitor from monitor m inner join aluno a on m.idAluno=a.idAluno inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and m.senha=? and p.ativo=true);";
 		Connection con = null;
 		int idMonitor = -1;
 		try {
@@ -234,13 +234,13 @@ public class MonitorDAO {
 		}
 	}
 
-	public void sairAtividade(int idAluno, int idAtividade){
-		String sql = "delete from monitorAtividade where idAtividade=? and idAluno=?";
+	public void sairAtividade(int idMonitor, int idAtividade){
+		String sql = "delete from monitorAtividade where idAtividade=? and idMonitor=?";
 		Connection con=null;
 		try {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setInt(1, idAluno);
+			stmt.setInt(2, idMonitor);
 			stmt.setInt(1, idAtividade);
 			stmt.execute();
 		} catch (SQLException e) {
