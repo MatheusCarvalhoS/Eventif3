@@ -234,4 +234,25 @@ public class MonitorDAO {
 		}
 	}
 
+	public void sairAtividade(int idAluno, int idAtividade){
+		String sql = "delete from monitorAtividade where idAtividade=? and idAluno=?";
+		Connection con=null;
+		try {
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, idAluno);
+			stmt.setInt(1, idAtividade);
+			stmt.execute();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"Não foi possível excluir conta! " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null,
+						"Impossível fechar conexão! " + e.getMessage());
+			}
+		}
+	}
 }

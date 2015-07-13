@@ -299,7 +299,7 @@ public class AlunoDAO {
 	}
 	
 	public int verificaLogin(String cpf, String senha){
-		String sql = "select idAluno from aluno a inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and a.senha=?);";
+		String sql = "select idAluno from aluno a inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and a.senha=? and p.ativo=true);";
 		Connection con = null;
 		int idAluno=-1;
 		try {
@@ -323,5 +323,44 @@ public class AlunoDAO {
 		}
 		return idAluno;
 	}
-
+	
+	public boolean desativarConta(int idAluno){
+		String sql1 = "update pessoa set ativo = false where idPessoa=?";
+		String sql2 = "select idEvento from alunoEvento where idAluno=?";
+		String sql3 = "select idAtividade from monitorAtividade where idMonitor=?";
+		Connection con = null;
+		try {
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt1 = con.prepareStatement(sql1);
+			PreparedStatement stmt2 = con.prepareStatement(sql2);
+			PreparedStatement stmt3 = con.prepareStatement(sql3);
+			
+			stmt1.setInt(1, idAluno);
+			stmt2.setInt(1, idAluno);
+			stmt3.setInt(1, idAluno);
+			stmt1.execute();
+			ResultSet result2 = stmt2.executeQuery();
+			while(result2.next()){
+				sairDoEvento(idAluno, result2.getInt("idEvento"));
+			}
+			
+			ResultSet result3 = stmt3.executeQuery();
+			while(result3.next()){
+				new MonitorDAO().sairAtividade(idAluno, result3.getInt("idAtividade"));
+			}
+			return true;
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"Não foi possível excluir conta! " + e.getMessage());
+			return false;
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null,
+						"Impossível fechar conexão! " + e.getMessage());
+				return false;
+			}
+		}
+	}
 }

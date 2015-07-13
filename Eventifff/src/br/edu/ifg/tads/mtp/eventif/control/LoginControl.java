@@ -168,4 +168,13 @@ public class LoginControl {
 			}
 		});
 	}
+
+	public JLabel getLbSair() {
+		return lbSair;
+	}
+
+	public void setLbSair(JLabel lbSair) {
+		this.lbSair = lbSair;
+	}
+	
 }

@@ -11,12 +11,9 @@ public class ConnectionFactory {
 		Connection con = null;
 		try {
 			con = DriverManager.getConnection("jdbc:postgresql://192.168.43.137:5432/eventif","postgres","1234");
-			System.out.println("Conectado!");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("ERRO ao conectar com o banco!");
-			String erro = "ERRO ao conectar ao banco de dados!!!";
-			JOptionPane.showMessageDialog(null, erro);
+			JOptionPane.showMessageDialog(null, "ERRO ao conectar ao banco de dados!!!");
 		}
 		return con;
 	}

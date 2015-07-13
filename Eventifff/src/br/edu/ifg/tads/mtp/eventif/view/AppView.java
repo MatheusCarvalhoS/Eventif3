@@ -89,4 +89,12 @@ public class AppView extends JFrame {
 		this.desk = desk;
 	}
 
+	public JLabel getLogo() {
+		return logo;
+	}
+
+	public void setLogo(JLabel logo) {
+		this.logo = logo;
+	}
+
 }

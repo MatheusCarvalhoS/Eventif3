@@ -28,10 +28,10 @@ public class PessoaInscricaoSistemaControl {
 	private PessoaInscricaoSistemaView inscreverPessoa;
 	private JPanel painel;
 	private AppView appView;
-	private JButton alterarSenha;
+	private JButton excluirConta;
 	private AlunoModel aluno;
 	private EnderecoModel endereco;
-
+	
 	public JPanel getPessoaInscricaoSistemaControl(AppView app) {
 		this.appView = app;
 		inscreverPessoa = new PessoaInscricaoSistemaView();
@@ -63,9 +63,9 @@ public class PessoaInscricaoSistemaControl {
 		painel.remove(inscreverPessoa.getSenha());
 		painel.remove(inscreverPessoa.getConfirmaSenha());
 		inscreverPessoa.getBtInscrever().setText("Alterar");
-		alterarSenha = new JButton("Alterar Senha");
-		alterarSenha.setBounds(5, 540, 150, 25);
-		painel.add(alterarSenha);
+		excluirConta = new JButton("Excluir conta");
+		excluirConta.setBounds(5, 540, 150, 25);
+		painel.add(excluirConta);
 
 		adicionaEventosAlterar();
 		return painel;
@@ -213,13 +213,24 @@ public class PessoaInscricaoSistemaControl {
 				}
 		});
 
-		alterarSenha.addActionListener(new ActionListener() {
+		excluirConta.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
-				// aqui irá alterar Senha
-				// =====================================================================
+				if(new AlunoDAO().desativarConta(aluno.getIdAluno())){
+					JOptionPane.showMessageDialog(null, "Conta excluída com sucesso");
+					appView.getPainelDireita().removeAll();
+					appView.getPainelDireita().add(new LoginControl().getLoginControl(appView));
+					appView.getPainelDireita().repaint();
+					
+					appView.getPainelEsquerda().removeAll();
+					appView.getPainelEsquerda().add(new MenuPrincipalControl().getMenuPrincipalControl(appView));
+					appView.getPainelEsquerda().repaint();
+					
+					appView.getPainelSuperior().removeAll();
+					appView.getPainelSuperior().add(appView.getLogo());
+					appView.getPainelSuperior().repaint();
+				}
 			}
 		});
-
 	}
 }
