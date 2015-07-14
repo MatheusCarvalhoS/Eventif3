@@ -12,13 +12,15 @@ public class AtividadeModel {
 	private String tipoAtividade;
 	private String cargaHoraria;
 	private int numeroVagas;
-	private Calendar data;
+	private String data;
 	
-	public Calendar getData() {
+	
+
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Calendar data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 

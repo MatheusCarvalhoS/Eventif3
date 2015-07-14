@@ -95,4 +95,36 @@ public class EnderecoDAO {
 		}
 	}
 	
+	public EnderecoModel getAlterarEndereco(int idEndereco){
+		EnderecoModel endereco = new EnderecoModel();
+		
+		String sql = "select * from endereco where idEndereco=?";
+		Connection con = null;
+		try {
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, idEndereco);
+			ResultSet result = stmt.executeQuery();
+			if(result.next()){
+				endereco.setIdEndereco(result.getInt("idEndereco"));
+				endereco.setNumero(result.getString("numero"));
+				endereco.setBairro(result.getString("bairro"));
+				endereco.setCep(result.getString("cep"));
+				endereco.setCidade(result.getString("cidade"));
+				endereco.setUf(result.getString("uf"));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Não deu pra inserir " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null,
+						"Deu merda, não deu pra fechar");
+			}
+		}
+		return endereco;
+	}
+	
 }

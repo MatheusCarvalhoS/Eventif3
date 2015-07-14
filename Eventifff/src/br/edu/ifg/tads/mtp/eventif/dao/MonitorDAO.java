@@ -166,6 +166,7 @@ public class MonitorDAO {
 			ResultSet result = stmt.executeQuery();
 			if (result.next()) {
 				idMonitor = result.getInt("idMonitor");
+				
 			}
 		} catch (SQLException e) {
 
@@ -234,15 +235,22 @@ public class MonitorDAO {
 		}
 	}
 
-	public void sairAtividade(int idMonitor, int idAtividade){
-		String sql = "delete from monitorAtividade where idAtividade=? and idMonitor=?";
+	public void sairAtividade(int idMonitor){
+		String sql = "delete from monitorAtividade where idMonitor=?";
+		String sql2 = "delete from monitor where(idMonitor = ?)";
+		
 		Connection con=null;
 		try {
 			con = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setInt(2, idMonitor);
-			stmt.setInt(1, idAtividade);
+			PreparedStatement stmt2 = con.prepareStatement(sql2);
+			
+			stmt.setInt(1, idMonitor);
 			stmt.execute();
+			
+			stmt2.setInt(1, idMonitor);
+			stmt2.execute();
+			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"Não foi possível excluir conta! " + e.getMessage());

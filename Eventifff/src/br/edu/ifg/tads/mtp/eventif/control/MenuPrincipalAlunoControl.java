@@ -43,7 +43,7 @@ public class MenuPrincipalAlunoControl {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				aluno = new AlunoDAO().getAlunoMinhaConta(idAluno);
-				endereco = new AlunoDAO().getEnderecoMinhaConta(aluno.getIdEndereco());
+				endereco = new EnderecoDAO().getAlterarEndereco(aluno.getIdEndereco());
 				appView.getPainelDireita().removeAll();
 				appView.getPainelDireita().add(new PessoaInscricaoSistemaControl().getPessoaAlteracaoSistemaControl(appView, aluno, endereco));
 				appView.getPainelDireita().repaint();

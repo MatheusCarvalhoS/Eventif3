@@ -6,8 +6,8 @@ public class EventoModel {
 
 	private long idEvento;
 	private String nome;
-	private Calendar dataInicio;
-	private Calendar dataFim;
+	private String dataInicio;
+	private String dataFim;
 	private String organizador;
 	private String telefone;
 	private String local;
@@ -41,19 +41,21 @@ public class EventoModel {
 		this.descricao = descricao;
 	}
 
-	public Calendar getDataInicio() {
+	
+
+	public String getDataInicio() {
 		return dataInicio;
 	}
 
-	public void setDataInicio(Calendar dataInicio) {
+	public void setDataInicio(String dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	public Calendar getDataFim() {
+	public String getDataFim() {
 		return dataFim;
 	}
 
-	public void setDataFim(Calendar dataFim) {
+	public void setDataFim(String dataFim) {
 		this.dataFim = dataFim;
 	}
 

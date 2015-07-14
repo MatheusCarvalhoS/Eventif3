@@ -64,23 +64,18 @@ public class GerenteListarAtividadeControl {
 	}
 
 	public void adicionaEventos() {
-		
-		
-		
-		
 		listarAtividade.getAlterarAtividade().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "alterarAtividade");
 				int id = Integer.parseInt(listarAtividade.getTable()
 						.getValueAt(listarAtividade.getTable().getSelectedRow(), 0).toString());
-				/*
 				appView.getPainelDireita().removeAll();
 				appView.getPainelDireita().add(
 						new GerenteCriarAtividadeControl()
 								.getGerenteAlterarAtividadeControl(id));
 				appView.getPainelDireita().repaint();
-				*/
+				
+				
 			}
 		});
 		

@@ -22,7 +22,6 @@ public class GerenteDAO {
 			ResultSet result = stmt.executeQuery();
 			if(result.next()){
 				idGerente = result.getInt("id");
-				System.out.println("Id que ele tá trazendo: "+idGerente);
 			}
 		} catch (SQLException e) {
 			

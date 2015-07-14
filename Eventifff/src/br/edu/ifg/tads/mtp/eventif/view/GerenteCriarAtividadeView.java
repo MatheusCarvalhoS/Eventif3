@@ -27,9 +27,9 @@ public class GerenteCriarAtividadeView {
 
 	private JTextField txNome;
 	private JTextArea txDescricaoAtividade;
-	private JTextField txData;
-	private JTextField txHoraInicio;
-	private JTextField txHoraFim;
+	private JFormattedTextField txData;
+	private JFormattedTextField txHoraInicio;
+	private JFormattedTextField txHoraFim;
 	private JTextField txTipoAtividade;
 	private JTextField txCargaHoraria;
 	private JTextField txNumeroVagas;
@@ -216,28 +216,13 @@ public class GerenteCriarAtividadeView {
 		this.txDescricaoAtividade = txDescricaoAtividade;
 	}
 
-	public JTextField getTxData() {
+
+	public JFormattedTextField getTxData() {
 		return txData;
 	}
 
-	public void setTxData(JTextField txData) {
+	public void setTxData(JFormattedTextField txData) {
 		this.txData = txData;
-	}
-
-	public JTextField getTxHoraInicio() {
-		return txHoraInicio;
-	}
-
-	public void setTxHoraInicio(JTextField txHoraInicio) {
-		this.txHoraInicio = txHoraInicio;
-	}
-
-	public JTextField getTxHoraFim() {
-		return txHoraFim;
-	}
-
-	public void setTxHoraFim(JTextField txHoraFim) {
-		this.txHoraFim = txHoraFim;
 	}
 
 	public JTextField getTxTipoAtividade() {
@@ -270,6 +255,22 @@ public class GerenteCriarAtividadeView {
 
 	public void setBtCriarAtividade(JButton btCriarAtividade) {
 		this.btCriarAtividade = btCriarAtividade;
+	}
+
+	public JFormattedTextField getTxHoraInicio() {
+		return txHoraInicio;
+	}
+
+	public void setTxHoraInicio(JFormattedTextField txHoraInicio) {
+		this.txHoraInicio = txHoraInicio;
+	}
+
+	public JFormattedTextField getTxHoraFim() {
+		return txHoraFim;
+	}
+
+	public void setTxHoraFim(JFormattedTextField txHoraFim) {
+		this.txHoraFim = txHoraFim;
 	}
 	
 

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Vector;
@@ -15,11 +16,12 @@ import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 import br.edu.ifg.tads.mtp.eventif.model.*;
 
 public class EventoDAO {
+	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");////////////
 
-	public boolean adicionaEvento(EventoModel evento) {
+	public boolean adicionaEvento(EventoModel evento) throws ParseException {
 		boolean retorno = true;
 		String sql = "insert into evento (nomeEvento,descricaoEvento,dataInicio,dataEncerramento, "
-				+ "organizador, telefoneContato, localEvento, idEndereco) values (?,?,?,?,?,?,?,?)";
+				+ "organizador, telefoneContato, localEvento, idEndereco, email) values (?,?,?,?,?,?,?,?,?)";
 		Connection con = null;
 		try {
 			// prepared statement para inserção
@@ -29,12 +31,14 @@ public class EventoDAO {
 			// seta os valores
 			stmt.setString(1, evento.getNome());
 			stmt.setString(2, evento.getDescricao());
-			stmt.setDate(3, new Date(evento.getDataInicio().getTimeInMillis()));
-			stmt.setDate(4, new Date(evento.getDataFim().getTimeInMillis()));
+	
+			stmt.setDate(3, new Date(format.parse(evento.getDataInicio()).getTime()));/////////
+			stmt.setDate(4, new Date(format.parse(evento.getDataFim()).getTime()));
 			stmt.setString(5, evento.getOrganizador());
 			stmt.setString(6, evento.getTelefone());
 			stmt.setString(7, evento.getLocal());
 			stmt.setInt(8, evento.getIdEndereco());
+			stmt.setString(9, evento.getEmail());
 			// executa
 			stmt.execute();
 		} catch (SQLException e) {
@@ -65,16 +69,25 @@ public class EventoDAO {
 				evento.setIdEvento(result1.getLong("idEvento"));
 				evento.setNome(result1.getString("nomeEvento"));
 				evento.setDescricao(result1.getString("descricaoEvento"));
-				Calendar dataInicio = Calendar.getInstance();
-				dataInicio.setTime(result1.getDate("dataInicio"));
-
-				evento.setDataInicio(dataInicio);
+				evento.setDataInicio(result1.getString("dataInicio"));
 				evento.setEmail(result1.getString("email"));
-
-				Calendar dataFim = Calendar.getInstance();
-				dataFim.setTime(result1.getDate("dataEncerramento"));
-
-				evento.setDataFim(dataFim);
+				evento.setDataFim(result1.getString("dataEncerramento"));
+				
+				String dataInicio = evento.getDataInicio();///////// formatando manualmente a data;
+				dataInicio=dataInicio+" ";
+				String ano = dataInicio.substring(0, 4);
+				String mes = dataInicio.substring(5, 7);
+				String dia = dataInicio.substring(8, 10);
+				dataInicio = (dia+"/"+mes+"/"+ano);
+				
+				String dataFim = evento.getDataFim();///////// formatando manualmente a data;
+				dataFim=dataFim+" ";
+				ano = dataFim.substring(0, 4);
+				mes = dataFim.substring(5, 7);
+				dia = dataFim.substring(8, 10);
+				dataFim = (dia+"/"+mes+"/"+ano);
+				
+				System.out.println("dtIn: "+dataInicio+" dtFim: "+dataFim);
 
 				evento.setOrganizador(result1.getString("organizador"));
 				evento.setTelefone(result1.getString("telefoneContato"));
@@ -84,11 +97,8 @@ public class EventoDAO {
 				Vector<String> colunas = new Vector<String>();
 				colunas.add("" + evento.getIdEvento());
 				colunas.add(evento.getNome());
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-				colunas.add(sdf.format(evento.getDataInicio().getTime()));
-
-				colunas.add(sdf.format(evento.getDataFim().getTime()));
+				colunas.add(dataInicio);
+				colunas.add(dataFim);
 				colunas.add(evento.getEmail());
 				colunas.add(evento.getOrganizador());
 				colunas.add(evento.getTelefone());
@@ -114,9 +124,9 @@ public class EventoDAO {
 			stmt1.close();
 			return listaEventos;
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,
-					"Erro ao listar tabela de eventos! ");
+					"Erro ao listar tabela de eventos! e: "+e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -138,17 +148,24 @@ public class EventoDAO {
 				evento.setIdEvento(result1.getLong("idEvento"));
 				evento.setNome(result1.getString("nomeEvento"));
 				evento.setDescricao(result1.getString("descricaoEvento"));
-				Calendar dataInicio = Calendar.getInstance();
-				dataInicio.setTime(result1.getDate("dataInicio"));
-
-				evento.setDataInicio(dataInicio);
+				evento.setDataInicio(result1.getString("dataInicio"));
+				evento.setDataFim(result1.getString("dataEncerramento"));
 				evento.setEmail(result1.getString("email"));
-
-				Calendar dataFim = Calendar.getInstance();
-				dataFim.setTime(result1.getDate("dataEncerramento"));
-
-				evento.setDataFim(dataFim);
-
+				
+				String dataInicio = evento.getDataInicio();///////// formatando manualmente a data;
+				dataInicio=dataInicio+" ";
+				String ano = dataInicio.substring(0, 4);
+				String mes = dataInicio.substring(5, 7);
+				String dia = dataInicio.substring(8, 10);
+				dataInicio = (dia+"/"+mes+"/"+ano);
+				
+				String dataFim = evento.getDataFim();///////// formatando manualmente a data;
+				dataFim=dataFim+" ";
+				ano = dataFim.substring(0, 4);
+				mes = dataFim.substring(5, 7);
+				dia = dataFim.substring(8, 10);
+				dataFim = (dia+"/"+mes+"/"+ano);
+				
 				evento.setOrganizador(result1.getString("organizador"));
 				evento.setTelefone(result1.getString("telefoneContato"));
 				evento.setLocal(result1.getString("localEvento"));
@@ -157,12 +174,9 @@ public class EventoDAO {
 				Vector<String> colunas = new Vector<String>();
 				colunas.add("" + evento.getIdEvento());
 				colunas.add(evento.getNome());
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-				colunas.add(sdf.format(evento.getDataInicio().getTime()));
-
-				colunas.add(sdf.format(evento.getDataFim().getTime()));
-				colunas.add(evento.getEmail());
+				colunas.add(dataInicio);
+				colunas.add(dataFim);
+				colunas.add(evento.getEmail());	
 				colunas.add(evento.getOrganizador());
 				colunas.add(evento.getTelefone());
 				colunas.add(evento.getLocal());
@@ -208,16 +222,23 @@ public class EventoDAO {
 				evento.setIdEvento(result1.getLong("idEvento"));
 				evento.setNome(result1.getString("nomeEvento"));
 				evento.setDescricao(result1.getString("descricaoEvento"));
-				Calendar dataInicio = Calendar.getInstance();
-				dataInicio.setTime(result1.getDate("dataInicio"));
-
-				evento.setDataInicio(dataInicio);
+				evento.setDataInicio(result1.getString("dataInicio"));
 				evento.setEmail(result1.getString("email"));
-
-				Calendar dataFim = Calendar.getInstance();
-				dataFim.setTime(result1.getDate("dataEncerramento"));
-
-				evento.setDataFim(dataFim);
+				evento.setDataFim(result1.getString("dataEncerramento"));
+				
+				String dataInicio = evento.getDataInicio();///////// formatando manualmente a data;
+				dataInicio=dataInicio+" ";
+				String ano = dataInicio.substring(0, 4);
+				String mes = dataInicio.substring(5, 7);
+				String dia = dataInicio.substring(8, 10);
+				dataInicio = (dia+"/"+mes+"/"+ano);
+				
+				String dataFim = evento.getDataFim();///////// formatando manualmente a data;
+				dataFim=dataFim+" ";
+				ano = dataFim.substring(0, 4);
+				mes = dataFim.substring(5, 7);
+				dia = dataFim.substring(8, 10);
+				dataFim = (dia+"/"+mes+"/"+ano);
 
 				evento.setOrganizador(result1.getString("organizador"));
 				evento.setTelefone(result1.getString("telefoneContato"));
@@ -227,11 +248,8 @@ public class EventoDAO {
 				Vector<String> colunas = new Vector<String>();
 				colunas.add("" + evento.getIdEvento());
 				colunas.add(evento.getNome());
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-				colunas.add(sdf.format(evento.getDataInicio().getTime()));
-
-				colunas.add(sdf.format(evento.getDataFim().getTime()));
+				colunas.add(dataInicio);
+				colunas.add(dataFim);
 				colunas.add(evento.getEmail());
 				colunas.add(evento.getOrganizador());
 				colunas.add(evento.getTelefone());
@@ -260,19 +278,17 @@ public class EventoDAO {
 			stmt.setInt(1, id);
 			ResultSet result = stmt.executeQuery();
 			if (result.next()) {
-
 				evento.setIdEvento(result.getLong("idEvento"));
 				evento.setNome(result.getString("nomeEvento"));
-
-				Calendar dataInicio = Calendar.getInstance();
-				dataInicio.setTime(result.getDate("dataInicio"));
-
-				evento.setDataInicio(dataInicio);
-
-				Calendar dataFim = Calendar.getInstance();
-				dataFim.setTime(result.getDate("dataEncerramento"));
-
-				evento.setDataFim(dataFim);
+				evento.setDataInicio(result.getString("dataInicio"));
+				evento.setEmail(result.getString("email"));
+				evento.setDataFim(result.getString("dataEncerramento"));
+				
+				evento.setIdEndereco(result.getInt("idEndereco"));
+				evento.setOrganizador(result.getString("organizador"));
+				evento.setTelefone(result.getString("telefoneContato"));
+				evento.setEmail(result.getString("email"));
+				evento.setLocal(result.getString("localEvento"));
 
 			} else {
 				JOptionPane.showMessageDialog(null,
@@ -284,7 +300,7 @@ public class EventoDAO {
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"Erro na conexão com o banco de dados! ");
+					"Erro na conexão com o banco de dados! " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -295,40 +311,31 @@ public class EventoDAO {
 			PreparedStatement stmt = new ConnectionFactory().getConnection()
 					.prepareStatement(
 							"select * from evento where(nomeEvento like lower('"
-									+ nome + "%')) order by idEvento"); // o
-																		// problema
-																		// estava
-																		// aqui,
-																		// pois
-																		// o
-																		// like
-																		// não
-																		// retornava
-																		// nada
-																		// pelo
-																		// fade
-																		// de
-																		// haver
-																		// um
-																		// espaço
+									+ nome + "%')) order by idEvento");
 
 			ResultSet result = stmt.executeQuery();
 			while (result.next()) {
 				EventoModel evento = new EventoModel();
-
 				evento.setIdEvento(result.getLong("idEvento"));
 				evento.setNome(result.getString("nomeEvento"));
 				evento.setDescricao(result.getString("descricaoEvento"));
-				Calendar dataInicio = Calendar.getInstance();
-				dataInicio.setTime(result.getDate("dataInicio"));
-
-				evento.setDataInicio(dataInicio);
 				evento.setEmail(result.getString("email"));
-
-				Calendar dataFim = Calendar.getInstance();
-				dataFim.setTime(result.getDate("dataEncerramento"));
-
-				evento.setDataFim(dataFim);
+				evento.setDataInicio(result.getString("dataInicio"));
+				evento.setDataFim(result.getString("dataEncerramento"));
+				
+				String dataInicio = evento.getDataInicio();///////// formatando manualmente a data;
+				dataInicio=dataInicio+" ";
+				String ano = dataInicio.substring(0, 4);
+				String mes = dataInicio.substring(5, 7);
+				String dia = dataInicio.substring(8, 10);
+				dataInicio = (dia+"/"+mes+"/"+ano);
+				
+				String dataFim = evento.getDataFim();///////// formatando manualmente a data;
+				dataFim=dataFim+" ";
+				ano = dataFim.substring(0, 4);
+				mes = dataFim.substring(5, 7);
+				dia = dataFim.substring(8, 10);
+				dataFim = (dia+"/"+mes+"/"+ano);
 
 				evento.setOrganizador(result.getString("organizador"));
 				evento.setTelefone(result.getString("telefoneContato"));
@@ -338,11 +345,8 @@ public class EventoDAO {
 				Vector<String> colunas = new Vector<String>();
 				colunas.add("" + evento.getIdEvento());
 				colunas.add(evento.getNome());
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-				colunas.add(sdf.format(evento.getDataInicio().getTime()));
-
-				colunas.add(sdf.format(evento.getDataFim().getTime()));
+				colunas.add(dataInicio);
+				colunas.add(dataFim);
 				colunas.add(evento.getEmail());
 				colunas.add(evento.getOrganizador());
 				colunas.add(evento.getTelefone());
@@ -360,6 +364,44 @@ public class EventoDAO {
 					"Erro ao listar tabelas de Evento! " + e.getMessage());
 			throw new RuntimeException(e);
 		}
+	}
+
+	public boolean alterarEvento(EventoModel evento) throws ParseException {
+		boolean retorno = false;
+		String sql = "update evento set nomeEvento= ? ,descricaoEvento= ? ,dataInicio= ? ,dataEncerramento= ? , "
+				+ "organizador= ? , telefoneContato= ? , localEvento= ? , idEndereco= ?, email= ?   where (idEvento = ?)";
+		Connection con = null;
+		try {
+			// prepared statement para inserção
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+
+			// seta os valores
+			stmt.setString(1, evento.getNome());
+			stmt.setString(2, evento.getDescricao());
+			stmt.setDate(3, new Date(format.parse(evento.getDataInicio()).getTime()));/////////
+			stmt.setDate(4, new Date(format.parse(evento.getDataFim()).getTime()));
+			stmt.setString(5, evento.getOrganizador());
+			stmt.setString(6, evento.getTelefone());
+			stmt.setString(7, evento.getLocal());
+			stmt.setInt(8, evento.getIdEndereco());
+			stmt.setString(9, evento.getEmail());
+			stmt.setLong(10, evento.getIdEvento());
+			// executa
+			stmt.execute();
+			retorno = true;
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Não foi possível Alterar. "
+					+ e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				JOptionPane
+						.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+		return retorno;
 	}
 
 }

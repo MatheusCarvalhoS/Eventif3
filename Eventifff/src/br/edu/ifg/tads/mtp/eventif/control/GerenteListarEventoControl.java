@@ -94,7 +94,6 @@ public class GerenteListarEventoControl {
 		listarEvento.getAlterarEvento().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "alterarEvento");
 				int id = Integer.parseInt(listarEvento.getTable()
 						.getValueAt(listarEvento.getTable().getSelectedRow(), 0).toString());
 				

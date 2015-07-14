@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import br.edu.ifg.tads.mtp.eventif.dao.AlunoDAO;
 import br.edu.ifg.tads.mtp.eventif.dao.GerenteDAO;
 import br.edu.ifg.tads.mtp.eventif.dao.MonitorDAO;
+import br.edu.ifg.tads.mtp.eventif.dao.PessoaDAO;
 import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.GerenteModel;
 import br.edu.ifg.tads.mtp.eventif.model.MonitorModel;
@@ -61,7 +62,6 @@ public class LoginControl {
 			}
 		});
 		
-		
 		login.getBtnOk().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -70,6 +70,7 @@ public class LoginControl {
 				int idAluno = -1;
 				int idMonitor = -1;
 				int idGerente = -1;
+				int id=0;
 				if (new VerificaCamposLogin().getVerificaCamposCriarLogin(login)) {
 					String cpf = login.getTxCpf().getText().replace(".", "")
 							.replace("-", "");
@@ -89,8 +90,9 @@ public class LoginControl {
 						login.getTfSenha().setText("");
 					}
 					
-					if(validacao && text.equals("Participante") && (idAluno=new AlunoDAO().verificaLogin(cpf, senha))==-1){
+					if(validacao && text.equals("Participante") && (idAluno=new AlunoDAO().verificaLogin(cpf, senha))<=-1){
 						validacao=false;
+						id=idAluno;
 					}else if(validacao && text.equals("Monitor (a)") && (idMonitor = new MonitorDAO().verificaLogin(cpf, senha))==-1){
 						validacao=false;
 					}else if(validacao && text.equals("Gerente") && (idGerente=new GerenteDAO().verificaLogin(cpf, senha))==-1){
@@ -98,10 +100,18 @@ public class LoginControl {
 					}
 					
 					if(!validacao){
-						JOptionPane.showMessageDialog(null,
-								"Verifique CPF e/ou Senha, Ou verifique se o "+text+" está Cadastrado!");
-						
-					}else if (text.equals("Gerente")) {
+						if(id==-2){
+							login.getTxCpf().setText("");
+							login.getTfSenha().setText("");
+							if(JOptionPane.showConfirmDialog(null,
+									"Aluno já cadastrado no sistema, deseja reativá-lo?") == 0){
+								new PessoaDAO().reativaPessoa(cpf);
+							}
+						}else{
+							JOptionPane.showMessageDialog(null,"Verifique CPF e/ou Senha ou se o "+text+" está cadastrado");
+						}
+					}
+					else if (text.equals("Gerente")) {
 						appView.getPainelSuperior().add(lbSair);
 						appView.getPainelSuperior().repaint();
 						gerente = new GerenteModel();
@@ -176,5 +186,4 @@ public class LoginControl {
 	public void setLbSair(JLabel lbSair) {
 		this.lbSair = lbSair;
 	}
-	
 }

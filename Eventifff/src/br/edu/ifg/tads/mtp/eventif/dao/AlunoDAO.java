@@ -13,45 +13,12 @@ import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
 
 public class AlunoDAO {
-	public EnderecoModel getEnderecoMinhaConta(int idEndereco){
-		EnderecoModel endereco = new EnderecoModel();
-		
-		String sql = "select * from endereco where idEndereco=?";
-		Connection con = null;
-		try {
-			con = new ConnectionFactory().getConnection();
-			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setInt(1, idEndereco);
-			ResultSet result = stmt.executeQuery();
-			if(result.next()){
-				endereco.setIdEndereco(result.getInt("idEndereco"));
-				endereco.setNumero(result.getString("numero"));
-				endereco.setBairro(result.getString("bairro"));
-				endereco.setCep(result.getString("cep"));
-				endereco.setCidade(result.getString("cidade"));
-				endereco.setUf(result.getString("uf"));
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null,
-					"Não deu pra inserir " + e.getMessage());
-		} finally {
-			try {
-				con.close();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null,
-						"Deu merda, não deu pra fechar");
-			}
-		}
-		return endereco;
-	}
 	
 	public AlunoModel getAlunoMinhaConta(int idAluno){
 		AlunoModel aluno = new AlunoModel();
-		EnderecoModel endereco = new EnderecoModel();
 		aluno.setIdAluno(idAluno);
 		String sql1 = "select * from aluno where idAluno=?";
 		String sql2 = "select * from pessoa where idPessoa=?";
-		String sql3 = "select * from endereco where idEndereco=?";
 		Connection con = null;
 		
 		try {
@@ -299,7 +266,7 @@ public class AlunoDAO {
 	}
 	
 	public int verificaLogin(String cpf, String senha){
-		String sql = "select idAluno from aluno a inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and a.senha=? and p.ativo=true);";
+		String sql = "select a.idAluno as idA, p.ativo pA from aluno a inner join pessoa p on a.idPessoa = p.idPessoa where(p.cpf=? and a.senha=?);";
 		Connection con = null;
 		int idAluno=-1;
 		try {
@@ -309,10 +276,15 @@ public class AlunoDAO {
 			stmt.setString(2, senha);
 			ResultSet result = stmt.executeQuery();
 			if(result.next()){
-				idAluno = result.getInt("idAluno");
+				if(!result.getBoolean("pA")){
+					idAluno = -2;
+					System.out.println("idALuno: "+idAluno);
+				}else{
+					idAluno = result.getInt("idA");
+				}
 			}
 		} catch (SQLException e) {
-			
+			System.out.println("Erro!: "+e.getMessage());
 		} finally {
 			try {
 				con.close();
@@ -347,8 +319,8 @@ public class AlunoDAO {
 			}
 			
 			ResultSet result3 = stmt3.executeQuery();
-			while(result3.next()){
-				new MonitorDAO().sairAtividade(result3.getInt("idMonitor"), result3.getInt("idAtividade"));
+			if(result3.next()){
+				new MonitorDAO().sairAtividade(result3.getInt("idMonitor"));
 			}
 			return true;
 		} catch (SQLException e) {
