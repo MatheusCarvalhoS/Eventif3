@@ -309,5 +309,26 @@ public class AtividadeDAO {
 		return retorno;
 	}
 	
+	public boolean excluirAtividade(int idEvento, int idAtividade){
+		boolean retorno = false;
+		String sql="delete from atividade where(idEvento = ? and idAtividade = ?);"; 
+		
+		Connection con = null;
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, idEvento);
+			stmt.setInt(2, idAtividade);
+			
+			stmt.execute();
+			
+			retorno=true;
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "ERRO ao tentar Deletar Atividade! "+e.getMessage());
+		}
+		
+		return retorno;
+	}
 	
 }

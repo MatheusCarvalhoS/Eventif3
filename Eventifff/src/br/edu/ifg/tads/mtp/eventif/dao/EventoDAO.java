@@ -404,4 +404,22 @@ public class EventoDAO {
 		return retorno;
 	}
 
+	public boolean excluirEvento(int idEvento){
+		boolean retorno = false;
+		Connection con = null;
+		String sql = "delete from evento where(idEvento = ?);";
+		
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, idEvento);
+			
+			stmt.execute();
+			retorno = true;
+		}catch(SQLException e){
+			retorno = false;
+		}
+		return retorno;
+	}
 }

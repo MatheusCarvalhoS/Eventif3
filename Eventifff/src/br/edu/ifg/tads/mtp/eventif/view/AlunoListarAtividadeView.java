@@ -52,7 +52,7 @@ public class AlunoListarAtividadeView {
 		painel.setBackground(new Color(240, 240, 240));
 		return painel;
 	}
-
+	
 	public JButton getInscrever() {
 		return inscrever;
 	}

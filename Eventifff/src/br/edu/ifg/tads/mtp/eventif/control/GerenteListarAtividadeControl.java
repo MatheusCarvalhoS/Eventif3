@@ -64,6 +64,16 @@ public class GerenteListarAtividadeControl {
 	}
 
 	public void adicionaEventos() {
+		listarAtividade.getExcluirAtividade().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int id = Integer.parseInt(listarAtividade.getTable()
+						.getValueAt(listarAtividade.getTable().getSelectedRow(), 0).toString());
+				new GerenteCriarAtividadeControl().excluirAtividade(idEvento ,id);
+				preencheTabela();
+			}
+		});
+		
 		listarAtividade.getAlterarAtividade().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

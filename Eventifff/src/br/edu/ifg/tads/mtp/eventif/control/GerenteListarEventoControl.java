@@ -31,7 +31,6 @@ public class GerenteListarEventoControl {
 		
 		preencheTabela();
 		adicionaEventos();
-		//adicionaListenner();
 		return painel;
 	}
 
@@ -122,13 +121,26 @@ public class GerenteListarEventoControl {
 		listarEvento.getJbtnPesquisar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("pesquisei evento");
 				listarEvento.getTable().removeAll();
 				listarEvento.getTable().setModel(new PesquisarEventoOuAtividadeControl().getPesquisarEventoControl(listarEvento.getJtfPesquisar().getText()));
 
 				listarEvento.getTable().getColumn("id").setMaxWidth(25);
 	
 				listarEvento.getTable().repaint();
+			}
+		});
+		listarEvento.getExcluirEvento().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int id = Integer.parseInt(listarEvento.getTable()
+						.getValueAt(listarEvento.getTable().getSelectedRow(), 0).toString());
+				if(new EventoDAO().excluirEvento(id)){
+					JOptionPane.showMessageDialog(null, "Evento deletado com Sucesso! ");
+					preencheTabela();
+				}else{
+
+					JOptionPane.showMessageDialog(null, "Evento não pode ser deletado! ");
+				}
 			}
 		});
 	}
