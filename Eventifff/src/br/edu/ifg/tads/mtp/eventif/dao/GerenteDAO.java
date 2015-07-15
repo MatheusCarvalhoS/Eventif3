@@ -80,7 +80,6 @@ public class GerenteDAO {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, idAluno);
 			stmt.setInt(2, idAtividade);
-			System.out.println("entrei");
 			result = stmt.executeQuery();
 
 		} catch (SQLException e) {
@@ -88,5 +87,30 @@ public class GerenteDAO {
 		}
 		return result;
 	}
+	
+	public ResultSet informacoesCertificado(int idAluno, int idAtividade) {
+		
+		String sql = "select p.cpf, p.nomePessoa, ativ.cargaHoraria, ativ.data, ativ.nomeAtividade from pessoa as p " +
+				"inner join aluno as a on p.idPessoa = a.idPessoa " +
+				"inner join alunoAtividade as alativ on alativ.idAluno = a.idAluno " +
+				"inner join atividade as ativ on alativ.idAtividade = ativ.idAtividade " +
+				"where(a.idAluno = ? and ativ.idAtividade= ?);";
+		
+		Connection con = null;
+		ResultSet result = null;
+		try {
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, idAluno);
+			stmt.setInt(2, idAtividade);
+			
+			result = stmt.executeQuery();
+
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		return result;
+	}
+	
 	
 }

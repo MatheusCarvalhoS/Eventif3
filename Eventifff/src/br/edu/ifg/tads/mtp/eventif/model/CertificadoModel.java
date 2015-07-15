@@ -5,6 +5,7 @@ public class CertificadoModel {
 	private String linha1;
 	private String linha2;
 	private String linha3;
+	private String linha4;
 	
 	public String getLinha1() {
 		return linha1;
@@ -24,6 +25,13 @@ public class CertificadoModel {
 	public void setLinha3(String linha3) {
 		this.linha3 = linha3;
 	}
+	public String getLinha4() {
+		return linha4;
+	}
+	public void setLinha4(String linha4) {
+		this.linha4 = linha4;
+	}
 
+	
 
 }
