@@ -14,6 +14,7 @@ public class GerenteListarAtividadeView {
 	private JButton excluirAtividade;
 	private JButton addAtividade;
 	private JButton selectMonitor;
+	private JButton gerarCertificados;
 
 	public JPanel getGerenteListarAtividadeView() {
 		painel = new JPanel();
@@ -43,13 +44,15 @@ public class GerenteListarAtividadeView {
 		excluirAtividade = new JButton("Excluir");
 		alterarAtividade = new JButton("Alterar");
 		selectMonitor = new JButton("Selecionar Monitor");
+		gerarCertificados = new JButton("Gerar Certificados");
 		
 		excluirAtividade.setBounds(5, 550, 170, 25);
 		alterarAtividade.setBounds(190, 550, 170, 25);
 		selectMonitor.setBounds(375, 550, 170, 25);
-
+		gerarCertificados.setBounds(560, 550, 170, 25);
 		painel.add(jScrollPane);
 		painel.add(jtfPesquisar);
+		painel.add(gerarCertificados);
 		painel.add(jbtnPesquisar);
 		painel.add(excluirAtividade);
 		painel.add(alterarAtividade);
@@ -114,4 +117,12 @@ public class GerenteListarAtividadeView {
 	public void setJbtnPesquisar(JButton jbtnPesquisar) {
 		this.jbtnPesquisar = jbtnPesquisar;
 	}
+	public JButton getGerarCertificados() {
+		return gerarCertificados;
+	}
+
+	public void setGerarCertificados(JButton gerarCertificados) {
+		this.gerarCertificados = gerarCertificados;
+	}
+	
 }

@@ -2,6 +2,7 @@ package br.edu.ifg.tads.mtp.eventif.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.AtividadeDAO;
+import br.edu.ifg.tads.mtp.eventif.dao.GerenteDAO;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAtividadeView;
 
@@ -62,6 +64,7 @@ public class GerenteListarAtividadeControl {
 		listarAtividade.getTable().setModel(model);
 		listarAtividade.getTable().getColumn("id").setMaxWidth(25);
 	}
+	
 
 	public void adicionaEventos() {
 		listarAtividade.getExcluirAtividade().addActionListener(new ActionListener() {
@@ -117,6 +120,51 @@ public class GerenteListarAtividadeControl {
 				}
 			}
 		});
+		
+		listarAtividade.getGerarCertificados().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int idAtividade = Integer.parseInt(listarAtividade.getTable()
+						.getValueAt(listarAtividade.getTable().getSelectedRow(), 0).toString());
+				
+				ResultSet result1 = null;
+				ResultSet result2 = null;
+				
+				result1 = new GerenteDAO().gerarCertificadosIdAluno(idAtividade);
+				
+				try {
+					
+					while(result1.next()){
+						System.out.println("gerar Certificados acionado");
+						int idAluno = result1.getInt("idAluno");
+						
+						result2 = new GerenteDAO().gerarCertificadosAtividade(idAluno, idAtividade);
+						
+						while(result2.next()){
+							int horasTotal = result2.getInt("totalHoras");
+							double cargaHoraria = Double.parseDouble(result2.getString("cargaHoraria"));
+							if(horasTotal>=(cargaHoraria*0.75)){
+								
+								JOptionPane.showMessageDialog(null, "certificado pode ser gerado");
+							}else{
+								JOptionPane.showMessageDialog(null, "certificado Não pode ser gerado!");
+							}
+							
+							
+							System.out.println(result2.getInt("totalHoras"));
+						}
+						
+						
+					
+					}
+					
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "ERRO ao tentar Gerar Certificados! "+e1.getMessage());
+				}
+			}
+		});
+		
 		
 	}
 

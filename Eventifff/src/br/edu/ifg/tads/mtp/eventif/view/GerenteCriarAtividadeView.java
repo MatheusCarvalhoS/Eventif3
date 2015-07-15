@@ -63,6 +63,7 @@ public class GerenteCriarAtividadeView {
 		txCargaHoraria = new JTextField();
 		txNumeroVagas = new JTextField();
 		txPalestrante = new JTextField();
+		//txCargaHoraria.setEnabled(false);
 
 		nome.setBounds(20, 5, 100, 25);
 		descricaoAtividade.setBounds(340, 5, 100, 25);

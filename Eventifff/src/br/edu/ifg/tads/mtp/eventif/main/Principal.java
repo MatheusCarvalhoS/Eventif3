@@ -14,11 +14,14 @@ import br.edu.ifg.tads.mtp.eventif.control.*;
 
 public class Principal {
 	public static void main(String[] args) throws JRException, SQLException {
+		
+		// Gerar Certificados;
+		/*
 		new GerarCertificados();
 		GerarCertificados.certificadoEvento("Matheus de Carvalho", "Maratona de Programação", "05410994183", "2");
 		GerarCertificados.certificadoAtividade("Matheus de Carvalho", "Maratona de Programação", "05410994183", "2");
+		*/
 		
-		/*
 		JDesktopPane desk =  new JDesktopPane();
 		
 		AppView app = new AppView(desk);
@@ -31,6 +34,6 @@ public class Principal {
 		
 		app.setVisible(true);
 		con.getConnection();
-		*/
+		
 	}
 }

@@ -34,7 +34,7 @@ public class PresencaDAO {
 		return idPessoa;
 	}
 	
-	public String verificaChekinChekoutEvento(int idAluno, int idEvento){
+	public String verificaCheckinCheckoutEvento(int idAluno, int idEvento){
 		String sql1 = "select idAluno as id from alunoEvento where (idAluno=? and idEvento=?)";
 		Connection con = null;
 		String resultado="nada";
@@ -88,7 +88,7 @@ public class PresencaDAO {
 		return resultado;
 	}
 	
-	public void chekinEvento(int idAluno, int idEvento){
+	public void checkinEvento(int idAluno, int idEvento){
 		String sql = "insert into presencaEvento(horaCheckin, idAluno, idEvento) values(current_Timestamp, ?, ?)";
 		Connection con = null;
 		try{
@@ -131,4 +131,103 @@ public class PresencaDAO {
 			}
 		}
 	}
+	
+	public String verificaChekinChekoutAtividade(int idAluno, int idAtividade){
+		String sql1 = "select idAluno as id from alunoAtividade where (idAluno=? and idAtividade=?)";
+		Connection con = null;
+		String resultado="nada";
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt1 = con.prepareStatement(sql1);
+			stmt1.setInt(1, idAluno);
+			stmt1.setInt(2, idAtividade);
+			
+			ResultSet result = stmt1.executeQuery();
+			
+			if(result.next()){
+				idAluno = result.getInt("id");
+				System.out.println("entrei idAluno = "+idAluno);
+				
+				String sql2 = "select pE.horaCheckin as entrada, pE.horaCheckout as saida from presencaAtividade as pE where(pE.idPresencaAtividade = (select max(idPresencaAtividade) from presencaAtividade where (idAluno=? and idAtividade=?)) and pE.idAluno=? and pE.idAtividade=?)";
+				
+				PreparedStatement stmt2 = con.prepareStatement(sql2);
+				stmt2.setInt(1, idAluno);
+				stmt2.setInt(2, idAtividade);
+				stmt2.setInt(3, idAluno);
+				stmt2.setInt(4, idAtividade);
+				
+				
+				ResultSet result2 = stmt2.executeQuery();
+				
+				if(result2.next()){
+					
+					if(result2.getTimestamp("saida") == null){
+						resultado = "checkout";
+					}else if(result2.getTimestamp("entrada") == null){
+						resultado = "checkin";
+					}else{
+						resultado = "checkin";
+					}
+				}else{
+					resultado = "checkin";
+				}
+			}
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Não foi possível realizar esta operação! "+e.getMessage());
+		} finally{
+			try{
+				con.close();
+			}catch(SQLException e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+		return resultado;
+	}
+	
+	public void checkinAtividade(int idAluno, int idAtividade){
+		String sql = "insert into presencaAtividade(horaCheckin, idAluno, idAtividade) values(current_Timestamp, ?, ?)";
+		Connection con = null;
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt1 = con.prepareStatement(sql);
+			stmt1.setInt(1, idAluno);
+			stmt1.setInt(2, idAtividade);
+			stmt1.execute();
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Não foi possível fazer checkin "+e.getMessage());
+		} finally{
+			try{
+				con.close();
+			}catch(SQLException e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+	}
+	
+	public void checkoutAtividade(int idAluno, int idAtividade){
+		String sql = "update presencaAtividade set horaCheckout = current_Timestamp "
+				+"where(idPresencaAtividade = (select max(idPresencaAtividade) from presencaAtividade "
+				+"where (idAluno=? and idAtividade=?)) and idAluno=? and idAtividade=?)";
+		Connection con = null;
+		try{
+			con = new ConnectionFactory().getConnection();
+			PreparedStatement stmt1 = con.prepareStatement(sql);
+			stmt1.setInt(1, idAluno);
+			stmt1.setInt(2, idAtividade);
+			stmt1.setInt(3, idAluno);
+			stmt1.setInt(4, idAtividade);
+			stmt1.execute();
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Não foi possível fazer checkin "+e.getMessage());
+		} finally{
+			try{
+				con.close();
+			}catch(SQLException e){
+				JOptionPane.showMessageDialog(null, "Impossível fechar conexão");
+			}
+		}
+	}
+	
+	
+	
 }

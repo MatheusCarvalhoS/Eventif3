@@ -9,7 +9,6 @@ public class MenuPrincipalGerenteView {
 	private JPanel painelEsquerda;
 	private JButton jbtnNovoEvento;
 	private JButton eventos;
-	private JButton gerarCertificados;
 	private JButton listarAlunos;
 	
 	public JPanel getMenuPrincipalGerenteView(){
@@ -20,18 +19,15 @@ public class MenuPrincipalGerenteView {
 		
 		jbtnNovoEvento = new JButton("Novo Evento");
 		eventos = new JButton("Eventos");
-		gerarCertificados = new JButton("Gerar Certificados");
 		listarAlunos = new JButton("Listar Alunos");
 		
 		eventos.setBounds(35, 150, 150, 25);
 		jbtnNovoEvento.setBounds(35, 190, 150, 25);
 		listarAlunos.setBounds(35, 230, 150, 25);
-		gerarCertificados.setBounds(35, 270, 150, 25);
 		
 		
 		painelEsquerda.add(jbtnNovoEvento);
 		painelEsquerda.add(eventos);
-		painelEsquerda.add(gerarCertificados);
 		painelEsquerda.add(listarAlunos);
 		return painelEsquerda;
 	}
@@ -66,14 +62,6 @@ public class MenuPrincipalGerenteView {
 
 	public void setEventos(JButton eventos) {
 		this.eventos = eventos;
-	}
-
-	public JButton getGerarCertificados() {
-		return gerarCertificados;
-	}
-
-	public void setGerarCertificados(JButton gerarCertificados) {
-		this.gerarCertificados = gerarCertificados;
 	}
 	
 }

@@ -68,7 +68,7 @@ public class GerenteCriarAtividadeControl {
 
 		criarAtividade.getTxHoraInicio().setValue(atividade.getHoraInicio());
 		criarAtividade.getTxHoraFim().setValue(atividade.getHoraEncerramento());
-
+		
 		adicionaEventosAlterar();
 		return painel;
 	}

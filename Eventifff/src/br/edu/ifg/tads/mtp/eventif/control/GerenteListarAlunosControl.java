@@ -67,6 +67,7 @@ public class GerenteListarAlunosControl {
 		listarAluno.getTable().removeAll();
 
 		Vector<String> colunas = new Vector<String>();
+		
 		colunas.add("idAluno");
 		colunas.add("idPessoa");
 		colunas.add("Nome");

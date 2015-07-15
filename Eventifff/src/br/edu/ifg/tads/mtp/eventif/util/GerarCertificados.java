@@ -15,6 +15,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class GerarCertificados {
+	
 	public static void certificadoEvento(String nome, String evento, String cpf, String horas) throws JRException, SQLException {
 
 		System.out.println("Gerando relatório...");
