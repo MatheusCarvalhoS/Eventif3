@@ -1,14 +1,24 @@
 package br.edu.ifg.tads.mtp.eventif.main;
 
+import java.sql.SQLException;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
+import net.sf.jasperreports.engine.JRException;
+
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
+import br.edu.ifg.tads.mtp.eventif.util.GerarCertificados;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
 import br.edu.ifg.tads.mtp.eventif.control.*;
 
 public class Principal {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JRException, SQLException {
+		new GerarCertificados();
+		GerarCertificados.certificadoEvento("Matheus de Carvalho", "Maratona de Programação", "05410994183", "2");
+		GerarCertificados.certificadoAtividade("Matheus de Carvalho", "Maratona de Programação", "05410994183", "2");
+		
+		/*
 		JDesktopPane desk =  new JDesktopPane();
 		
 		AppView app = new AppView(desk);
@@ -21,5 +31,6 @@ public class Principal {
 		
 		app.setVisible(true);
 		con.getConnection();
+		*/
 	}
 }
