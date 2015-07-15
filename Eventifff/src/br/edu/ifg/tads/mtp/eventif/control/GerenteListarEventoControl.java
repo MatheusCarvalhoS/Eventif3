@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.EventoDAO;
-import br.edu.ifg.tads.mtp.eventif.util.Dispatcher;
-import br.edu.ifg.tads.mtp.eventif.util.Listener;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteListarEventoView;
 
@@ -32,20 +30,6 @@ public class GerenteListarEventoControl {
 		preencheTabela();
 		adicionaEventos();
 		return painel;
-	}
-
-	public void adicionaListenner() {
-		Dispatcher.getInstance().addListener(new Listener() {
-			@Override
-			public void receivedEvent(
-					br.edu.ifg.tads.mtp.eventif.util.Event event) {
-				if (event.getName().equals("excluir")
-						|| event.getName().equals("alterar")
-						|| event.getName().equals("nova atividade")) {
-					preencheTabela();
-				}
-			}
-		});
 	}
 
 	public void preencheTabela() {

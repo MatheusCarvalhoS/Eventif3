@@ -8,5 +8,13 @@
 	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/juv-webcam-sdk-1.1.0.jar"/>
 	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/postgresql-9.4-1201.jdbc4.jar"/>
 	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/ZXing-2.1(1).jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/poi-3.6.jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/jasperreports-3.7.5.jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/iText-2.1.7.jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/groovy-all-1.5.5.jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="src/br/edu/ifg/tads/mtp/eventif/util/MER/commons-digester-1.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
