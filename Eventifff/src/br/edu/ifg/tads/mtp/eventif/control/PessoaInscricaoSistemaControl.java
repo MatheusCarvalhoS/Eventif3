@@ -193,7 +193,6 @@ public class PessoaInscricaoSistemaControl {
 		inscreverPessoa.getBtInscrever().addActionListener(
 			new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					
 					aluno.setNomePessoa(inscreverPessoa.getTxNome().getText());
 					aluno.setCpf(inscreverPessoa.getTxCpf().getText().replace(".", "").replace("-", ""));
 					aluno.setRg(inscreverPessoa.getTxRg().getText());
@@ -204,9 +203,7 @@ public class PessoaInscricaoSistemaControl {
 					endereco.setUf(inscreverPessoa.getTxUf().getText());
 					
 					if(new PessoaDAO().alterarPessoa(aluno)){
-						System.out.println("aluno 1 = "+ aluno.getNomePessoa());
 						if(new EnderecoDAO().alterarEndereco(endereco)){
-							System.out.println("endereco 1 cidade = "+ endereco.getCidade());
 							JOptionPane.showMessageDialog(null, "Dados Alterados Com Sucesso! ");
 						}
 					}
@@ -214,21 +211,22 @@ public class PessoaInscricaoSistemaControl {
 		});
 
 		excluirConta.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
-				if(new AlunoDAO().desativarConta(aluno.getIdAluno())){
-					JOptionPane.showMessageDialog(null, "Conta excluída com sucesso");
-					appView.getPainelDireita().removeAll();
-					appView.getPainelDireita().add(new LoginControl().getLoginControl(appView));
-					appView.getPainelDireita().repaint();
-					
-					appView.getPainelEsquerda().removeAll();
-					appView.getPainelEsquerda().add(new MenuPrincipalControl().getMenuPrincipalControl(appView));
-					appView.getPainelEsquerda().repaint();
-					
-					appView.getPainelSuperior().removeAll();
-					appView.getPainelSuperior().add(appView.getLogo());
-					appView.getPainelSuperior().repaint();
+				if(JOptionPane.showConfirmDialog(null, "Tem Certeza que Deseja Excluir Sua Conta?")==0){
+					if(new AlunoDAO().desativarConta(aluno.getIdAluno())){
+						JOptionPane.showMessageDialog(null, "Conta excluída com sucesso");
+						appView.getPainelDireita().removeAll();
+						appView.getPainelDireita().add(new LoginControl().getLoginControl(appView));
+						appView.getPainelDireita().repaint();
+						
+						appView.getPainelEsquerda().removeAll();
+						appView.getPainelEsquerda().add(new MenuPrincipalControl().getMenuPrincipalControl(appView));
+						appView.getPainelEsquerda().repaint();
+						
+						appView.getPainelSuperior().removeAll();
+						appView.getPainelSuperior().add(appView.getLogo());
+						appView.getPainelSuperior().repaint();
+					}
 				}
 			}
 		});

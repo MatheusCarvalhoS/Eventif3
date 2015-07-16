@@ -260,7 +260,7 @@ public class LerQRcode extends Object {
 			
 		} catch (Exception e) {
 			new PresencaControl().getLerQrCode("04934716181", tipo, id);
-			JOptionPane.showMessageDialog(null, "ERRO ao Ler o QRcode yvdrd!");
+			JOptionPane.showMessageDialog(null, "ERRO ao Ler o QRcode!");
 		}
 	}
 

@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JRException;
 
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
-import br.edu.ifg.tads.mtp.eventif.util.GerarCertificados;
 import br.edu.ifg.tads.mtp.eventif.view.AppView;
 import br.edu.ifg.tads.mtp.eventif.control.*;
 

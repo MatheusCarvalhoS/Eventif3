@@ -4,28 +4,17 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.SimpleTimeZone;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import br.edu.ifg.tads.mtp.eventif.dao.AtividadeDAO;
-import br.edu.ifg.tads.mtp.eventif.dao.EnderecoDAO;
-import br.edu.ifg.tads.mtp.eventif.dao.EventoDAO;
 import br.edu.ifg.tads.mtp.eventif.model.AtividadeModel;
-import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
-import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
 import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposCriarAtividade;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarAtividadeView;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarEventoView;
-import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAtividadeView;
 
 public class GerenteCriarAtividadeControl {
     private GerenteCriarAtividadeView criarAtividade;
-    private GerenteListarAtividadeView listarAtividade;
     private JPanel painel;
     private int idEvento;
     private int idAtividade;
@@ -195,12 +184,8 @@ public class GerenteCriarAtividadeControl {
     }
 
     public boolean excluirAtividade(int idEvento, int idAividade) {
-       
-        if(new AtividadeDAO().excluirAtividade(idEvento, idAividade)){
-            JOptionPane.showMessageDialog(null, "Exclusão de Atividade Feita com Sucesso!");
-           
-        }else{
-            JOptionPane.showMessageDialog(null, "Não foi Possivel deletar a Atividade! ");
+        if(!new AtividadeDAO().excluirAtividade(idEvento, idAividade)){
+           JOptionPane.showMessageDialog(null, "Não foi Possivel deletar a Atividade! ");
         }
         return true;
     }

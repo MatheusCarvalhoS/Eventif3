@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 import br.edu.ifg.tads.mtp.eventif.bd.ConnectionFactory;
 import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
-import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
 
 public class AlunoDAO {
 	

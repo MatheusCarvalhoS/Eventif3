@@ -73,15 +73,17 @@ public class GerenteListarAtividadeControl {
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						int id = Integer.parseInt(listarAtividade
-								.getTable()
-								.getValueAt(
-										listarAtividade.getTable()
-												.getSelectedRow(), 0)
-								.toString());
-						new GerenteCriarAtividadeControl().excluirAtividade(
-								idEvento, id);
-						preencheTabela();
+						if(JOptionPane.showConfirmDialog(null, "Tem Certeza que Deseja Excluir a Atividade?")==0){
+							int id = Integer.parseInt(listarAtividade
+									.getTable()
+									.getValueAt(
+											listarAtividade.getTable()
+													.getSelectedRow(), 0)
+									.toString());
+							new GerenteCriarAtividadeControl().excluirAtividade(
+									idEvento, id);
+							preencheTabela();
+					    }
 					}
 				});
 

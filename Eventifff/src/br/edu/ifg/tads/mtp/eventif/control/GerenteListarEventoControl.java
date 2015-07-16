@@ -116,14 +116,14 @@ public class GerenteListarEventoControl {
 		listarEvento.getExcluirEvento().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int id = Integer.parseInt(listarEvento.getTable()
-						.getValueAt(listarEvento.getTable().getSelectedRow(), 0).toString());
-				if(new EventoDAO().excluirEvento(id)){
-					JOptionPane.showMessageDialog(null, "Evento deletado com Sucesso! ");
-					preencheTabela();
-				}else{
-
-					JOptionPane.showMessageDialog(null, "Evento não pode ser deletado! ");
+				if(JOptionPane.showConfirmDialog(null, "Tem Certeza que Deseja Excluir o Evento?")==0){
+					int id = Integer.parseInt(listarEvento.getTable()
+							.getValueAt(listarEvento.getTable().getSelectedRow(), 0).toString());
+					if(new EventoDAO().excluirEvento(id)){
+						preencheTabela();
+					}else{
+						JOptionPane.showMessageDialog(null, "Evento não pode ser deletado! ");
+					}
 				}
 			}
 		});

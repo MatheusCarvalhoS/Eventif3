@@ -8,11 +8,9 @@ public class PresencaControl {
 	
 	public void getLerQrCode(String cpf, String tipo, int id){
 		int idAluno = new PresencaDAO().getIdPessoaCPF(cpf);
-		System.out.println("idAluno: "+ idAluno);
 		if(idAluno!=0){
 			if(tipo.equals("evento")){
 				if(new PresencaDAO().verificaCheckinCheckoutEvento(idAluno, id).equals("checkin")){
-					//A função acima deverá verificar se o aluno está inscrito no evento
 					new PresencaDAO().checkinEvento(idAluno, id);
 				}else if(new PresencaDAO().verificaCheckinCheckoutEvento(idAluno, id).equals("checkout")){
 					new PresencaDAO().checkoutEvento(idAluno, id);

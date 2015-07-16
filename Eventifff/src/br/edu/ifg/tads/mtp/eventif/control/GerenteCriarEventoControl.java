@@ -4,9 +4,6 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -79,7 +76,6 @@ public class GerenteCriarEventoControl {
 	public void adicionaEventosCriar() {
 		criarEvento.getBtCriar().addActionListener(new ActionListener() {
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (new VerificaCamposCriarEvento()
@@ -112,7 +108,6 @@ public class GerenteCriarEventoControl {
 								JOptionPane.showMessageDialog(null, "Evento Criado com sucesso! ");				
 							}
 						} catch (HeadlessException | ParseException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -127,7 +122,6 @@ public class GerenteCriarEventoControl {
 	public void adicionaEventosAlterar() {
 		criarEvento.getBtCriar().addActionListener(new ActionListener() {
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (new VerificaCamposCriarEvento()
@@ -162,7 +156,6 @@ public class GerenteCriarEventoControl {
 								JOptionPane.showMessageDialog(null, "Evento Alterado com sucesso! ");				
 							}
 						} catch (HeadlessException | ParseException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
