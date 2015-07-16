@@ -188,7 +188,7 @@ public class AtividadeDAO {
 			PreparedStatement stmt = new ConnectionFactory()
 					.getConnection()
 					.prepareStatement(
-							"select * from atividade where(nomeAtividade like lower('"+nome+"%') and idEvento = ?) order by idAtividade");
+							"select * from atividade where(nomeAtividade like '%"+nome+"%' and idEvento = ?) order by idAtividade");
 			
 			stmt.setInt(1, idEvento);
 			ResultSet result = stmt.executeQuery();
@@ -204,6 +204,7 @@ public class AtividadeDAO {
 				atividade.setCargaHoraria(result.getString("cargaHoraria"));
 				atividade.setNumeroVagas(result.getInt("numeroVagas"));
 				atividade.setData(result.getString("data"));
+				
 				String data = atividade.getData();///////// formatando manualmente a data;
 				data=data+" ";
 				String ano = data.substring(0, 4);

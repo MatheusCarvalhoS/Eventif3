@@ -15,7 +15,6 @@ public class PesquisarEventoOuAtividadeControl {
 		
 		Vector<Vector<String>> listaEvento = new EventoDAO().pesquisarEvento(nome);
 		
-
 		Vector<String> colunas = new Vector<String>();
 		colunas.add("id");
 		colunas.add("nome");
@@ -51,6 +50,7 @@ public class PesquisarEventoOuAtividadeControl {
 
 		DefaultTableModel model = new DefaultTableModel(listaAtividade, colunas);
 		System.out.println("retornei");
+		
 		return model;
 	}
 	

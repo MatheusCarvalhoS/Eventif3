@@ -310,8 +310,8 @@ public class EventoDAO {
 			Vector<Vector<String>> listaEventos = new Vector<Vector<String>>();
 			PreparedStatement stmt = new ConnectionFactory().getConnection()
 					.prepareStatement(
-							"select * from evento where(nomeEvento like lower('"
-									+ nome + "%')) order by idEvento");
+							"select * from evento where(nomeEvento like '%"
+									+ nome + "%') order by idEvento");
 
 			ResultSet result = stmt.executeQuery();
 			while (result.next()) {

@@ -7,8 +7,6 @@ public class VerificaCamposCriarAtividade {
 		boolean verify=true;
 		if(atividadeView.getNome().getText().isEmpty()){
 			verify=false;
-		}else if(atividadeView.getTxCargaHoraria().getText().isEmpty()){
-			verify = false;
 		}else if(atividadeView.getTxData().getText().isEmpty()){
 			verify = false;
 		}else if(atividadeView.getTxDescricaoAtividade().getText().isEmpty()){

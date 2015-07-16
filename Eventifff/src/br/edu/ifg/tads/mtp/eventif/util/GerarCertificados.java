@@ -17,14 +17,22 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class GerarCertificados {
 
 	public static void certificadoAtividade(String nome, String atividade, String cpf, String horas, String data) throws JRException, SQLException {
-
+		double horasConvert = Float.parseFloat(horas)/60;
+		
+		if(horasConvert >= 60){
+			horas = horasConvert+ " Hora(s).";
+		}else{
+			horas += " Minuto(s).";
+		}
+		
 		System.out.println("Gerando Certificado...");
 		// lista com os nossos clientes
 		List<CertificadoModel> lista = new ArrayList<CertificadoModel>();
 
 		String linha1 = "Certificamos que "+nome+" com CPF  "+cpf+", Participou da Atividade ";
 		String linha2 = atividade+" no Instituto Federal de Ciência e Tecnologia de Goiás, Câmpus Formosa.";
-		String linha3 = "Carga horária: "+horas+" horas.";
+		
+		String linha3 = "Carga horária: "+horas;
 		
 		data=data+" ";
 		String ano = data.substring(0, 4);

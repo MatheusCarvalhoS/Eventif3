@@ -13,266 +13,239 @@ import br.edu.ifg.tads.mtp.eventif.util.FormatadorMascara;
 
 public class GerenteCriarAtividadeView {
 
-	private JPanel painel;
+    private JPanel painel;
 
-	private JLabel nome;
-	private JLabel descricaoAtividade;
-	private JLabel data;
-	private JLabel horaInicio;
-	private JLabel horaFim;
-	private JLabel tipoAtividade;
-	private JLabel cargaHoraria;
-	private JLabel numeroVagas;
-	private JLabel palestrante;
+    private JLabel nome;
+    private JLabel descricaoAtividade;
+    private JLabel data;
+    private JLabel horaInicio;
+    private JLabel horaFim;
+    private JLabel tipoAtividade;
+    private JLabel numeroVagas;
+    private JLabel palestrante;
 
-	private JTextField txNome;
-	private JTextArea txDescricaoAtividade;
-	private JFormattedTextField txData;
-	private JFormattedTextField txHoraInicio;
-	private JFormattedTextField txHoraFim;
-	private JTextField txTipoAtividade;
-	private JTextField txCargaHoraria;
-	private JTextField txNumeroVagas;
-	private JTextField txPalestrante;
-	
-	private JButton btCriarAtividade;
+    private JTextField txNome;
+    private JTextArea txDescricaoAtividade;
+    private JFormattedTextField txData;
+    private JFormattedTextField txHoraInicio;
+    private JFormattedTextField txHoraFim;
+    private JTextField txTipoAtividade;
+    private JTextField txNumeroVagas;
+    private JTextField txPalestrante;
+   
+    private JButton btCriarAtividade;
 
-	public JPanel getGerenteCriarAtividadeView() {
-		painel = new JPanel();
-		painel.setBounds(0, 0, 979, 624);
-		painel.setLayout(null);
+    public JPanel getGerenteCriarAtividadeView() {
+        painel = new JPanel();
+        painel.setBounds(0, 0, 979, 624);
+        painel.setLayout(null);
 
-		btCriarAtividade = new JButton("Criar");
-		// Criação dos elemento
-		nome = new JLabel("Nome:");
-		descricaoAtividade = new JLabel("Descrição:");
-		data = new JLabel("Data:");
-		horaInicio = new JLabel("Hora de Início:");
-		horaFim = new JLabel("Hora de Fim:");
-		tipoAtividade = new JLabel("Tipo:");
-		cargaHoraria = new JLabel("Carga Horária:");
-		numeroVagas = new JLabel("Numero de Vagas:");
-		palestrante = new JLabel("Palestrante:");
+        btCriarAtividade = new JButton("Criar");
+        // Criação dos elemento
+        nome = new JLabel("Nome:");
+        descricaoAtividade = new JLabel("Descrição:");
+        data = new JLabel("Data:");
+        horaInicio = new JLabel("Hora de Início:");
+        horaFim = new JLabel("Hora de Fim:");
+        tipoAtividade = new JLabel("Tipo:");
+        numeroVagas = new JLabel("Número de vagas:");
+        palestrante = new JLabel("Palestrante:");
 
-		txNome = new JTextField();
-		txDescricaoAtividade = new JTextArea();
-		txData = new JFormattedTextField(new FormatadorMascara().mascara("##/##/####"));
-		txHoraInicio = new JFormattedTextField(new FormatadorMascara().mascara("##:##"));
-		txHoraFim =new JFormattedTextField(new FormatadorMascara().mascara("##:##"));
-		txTipoAtividade = new JTextField();
-		txCargaHoraria = new JTextField();
-		txNumeroVagas = new JTextField();
-		txPalestrante = new JTextField();
-		//txCargaHoraria.setEnabled(false);
+        txNome = new JTextField();
+        txDescricaoAtividade = new JTextArea();
+        txData = new JFormattedTextField(new FormatadorMascara().mascara("##/##/####"));
+        txHoraInicio = new JFormattedTextField(new FormatadorMascara().mascara("##:##"));
+        txHoraFim =new JFormattedTextField(new FormatadorMascara().mascara("##:##"));
+        txTipoAtividade = new JTextField();
+        txNumeroVagas = new JTextField();
+        txPalestrante = new JTextField();
 
-		nome.setBounds(20, 5, 100, 25);
-		descricaoAtividade.setBounds(340, 5, 100, 25);
-		data.setBounds(20, 60, 120, 25);
-		horaInicio.setBounds(200, 60, 120, 25);
-		horaFim.setBounds(20, 110, 100, 25);
-		tipoAtividade.setBounds(20, 160, 100, 25);
-		cargaHoraria.setBounds(220, 160, 150, 25);
-		numeroVagas.setBounds(20, 210, 150, 25);	
-		palestrante.setBounds(20, 260, 150, 25);
-		
-		txNome.setBounds(70, 5, 240, 25);
-		txDescricaoAtividade.setBounds(420, 5, 300, 120);
-		txData.setBounds(65, 60, 120, 25);
-		txHoraInicio.setBounds(310, 60, 100, 25);
-		txHoraFim.setBounds(115, 110, 100, 25);
-		txTipoAtividade.setBounds(65, 160, 100, 25);
-		txCargaHoraria.setBounds(330, 160, 150, 25);
-		txNumeroVagas.setBounds(160, 210, 150, 25);	
-		txPalestrante.setBounds(120, 260, 150, 25);
-		
-		btCriarAtividade.setBounds(570, 540, 150, 25);
-		
-		painel.add(nome);
-		painel.add(descricaoAtividade);
-		painel.add(data);
-		painel.add(horaInicio);
-		painel.add(horaFim);
-		painel.add(tipoAtividade);
-		painel.add(cargaHoraria);
-		painel.add(numeroVagas);
-		painel.add(palestrante);
-		
-		painel.add(txNome);
-		painel.add(txDescricaoAtividade);
-		painel.add(txCargaHoraria);
-		painel.add(txHoraFim);
-		painel.add(txData);
-		painel.add(txHoraInicio);
-		painel.add(txNumeroVagas);
-		painel.add(txTipoAtividade);
-		painel.add(txPalestrante);
-		
-		painel.add(btCriarAtividade);
-		
-		painel.setBackground(new Color(240, 240, 240));
-		return painel;
-	}
+        nome.setBounds(20, 5, 100, 25);
+        descricaoAtividade.setBounds(340, 5, 100, 25);
+        data.setBounds(20, 60, 120, 25);
+        horaInicio.setBounds(200, 60, 120, 25);
+        horaFim.setBounds(20, 110, 100, 25);
+        tipoAtividade.setBounds(20, 160, 100, 25);
+        numeroVagas.setBounds(20, 210, 150, 25);   
+        palestrante.setBounds(20, 260, 150, 25);
+       
+        txNome.setBounds(70, 5, 240, 25);
+        txDescricaoAtividade.setBounds(420, 5, 300, 120);
+        txData.setBounds(65, 60, 120, 25);
+        txHoraInicio.setBounds(310, 60, 100, 25);
+        txHoraFim.setBounds(115, 110, 100, 25);
+        txTipoAtividade.setBounds(65, 160, 100, 25);
+        txNumeroVagas.setBounds(160, 210, 150, 25);   
+        txPalestrante.setBounds(120, 260, 150, 25);
+       
+        btCriarAtividade.setBounds(570, 540, 150, 25);
+       
+        painel.add(nome);
+        painel.add(descricaoAtividade);
+        painel.add(data);
+        painel.add(horaInicio);
+        painel.add(horaFim);
+        painel.add(tipoAtividade);
+        painel.add(numeroVagas);
+        painel.add(palestrante);
+       
+        painel.add(txNome);
+        painel.add(txDescricaoAtividade);
+        painel.add(txHoraFim);
+        painel.add(txData);
+        painel.add(txHoraInicio);
+        painel.add(txNumeroVagas);
+        painel.add(txTipoAtividade);
+        painel.add(txPalestrante);
+       
+        painel.add(btCriarAtividade);
+       
+        painel.setBackground(new Color(240, 240, 240));
+        return painel;
+    }
 
-	public JLabel getPalestrante() {
-		return palestrante;
-	}
+    public JLabel getPalestrante() {
+        return palestrante;
+    }
 
-	public void setPalestrante(JLabel palestrante) {
-		this.palestrante = palestrante;
-	}
+    public void setPalestrante(JLabel palestrante) {
+        this.palestrante = palestrante;
+    }
 
-	public JTextField getTxPalestrante() {
-		return txPalestrante;
-	}
+    public JTextField getTxPalestrante() {
+        return txPalestrante;
+    }
 
-	public void setTxPalestrante(JTextField txPalestrante) {
-		this.txPalestrante = txPalestrante;
-	}
+    public void setTxPalestrante(JTextField txPalestrante) {
+        this.txPalestrante = txPalestrante;
+    }
 
-	public JPanel getPainel() {
-		return painel;
-	}
+    public JPanel getPainel() {
+        return painel;
+    }
 
-	public void setPainel(JPanel painel) {
-		this.painel = painel;
-	}
+    public void setPainel(JPanel painel) {
+        this.painel = painel;
+    }
 
-	public JLabel getNome() {
-		return nome;
-	}
+    public JLabel getNome() {
+        return nome;
+    }
 
-	public void setNome(JLabel nome) {
-		this.nome = nome;
-	}
+    public void setNome(JLabel nome) {
+        this.nome = nome;
+    }
 
-	public JLabel getDescricaoAtividade() {
-		return descricaoAtividade;
-	}
+    public JLabel getDescricaoAtividade() {
+        return descricaoAtividade;
+    }
 
-	public void setDescricaoAtividade(JLabel descricaoAtividade) {
-		this.descricaoAtividade = descricaoAtividade;
-	}
+    public void setDescricaoAtividade(JLabel descricaoAtividade) {
+        this.descricaoAtividade = descricaoAtividade;
+    }
 
-	public JLabel getData() {
-		return data;
-	}
+    public JLabel getData() {
+        return data;
+    }
 
-	public void setData(JLabel data) {
-		this.data = data;
-	}
+    public void setData(JLabel data) {
+        this.data = data;
+    }
 
-	public JLabel getHoraInicio() {
-		return horaInicio;
-	}
+    public JLabel getHoraInicio() {
+        return horaInicio;
+    }
 
-	public void setHoraInicio(JLabel horaInicio) {
-		this.horaInicio = horaInicio;
-	}
+    public void setHoraInicio(JLabel horaInicio) {
+        this.horaInicio = horaInicio;
+    }
 
-	public JLabel getHoraFim() {
-		return horaFim;
-	}
+    public JLabel getHoraFim() {
+        return horaFim;
+    }
 
-	public void setHoraFim(JLabel horaFim) {
-		this.horaFim = horaFim;
-	}
+    public void setHoraFim(JLabel horaFim) {
+        this.horaFim = horaFim;
+    }
 
-	public JLabel getTipoAtividade() {
-		return tipoAtividade;
-	}
+    public JLabel getTipoAtividade() {
+        return tipoAtividade;
+    }
 
-	public void setTipoAtividade(JLabel tipoAtividade) {
-		this.tipoAtividade = tipoAtividade;
-	}
+    public void setTipoAtividade(JLabel tipoAtividade) {
+        this.tipoAtividade = tipoAtividade;
+    }
 
-	public JLabel getCargaHoraria() {
-		return cargaHoraria;
-	}
+    public JLabel getNumeroVagas() {
+        return numeroVagas;
+    }
 
-	public void setCargaHoraria(JLabel cargaHoraria) {
-		this.cargaHoraria = cargaHoraria;
-	}
+    public void setNumeroVagas(JLabel numeroVagas) {
+        this.numeroVagas = numeroVagas;
+    }
 
-	public JLabel getNumeroVagas() {
-		return numeroVagas;
-	}
+    public JTextField getTxNome() {
+        return txNome;
+    }
 
-	public void setNumeroVagas(JLabel numeroVagas) {
-		this.numeroVagas = numeroVagas;
-	}
+    public void setTxNome(JTextField txNome) {
+        this.txNome = txNome;
+    }
 
-	public JTextField getTxNome() {
-		return txNome;
-	}
+    public JTextArea getTxDescricaoAtividade() {
+        return txDescricaoAtividade;
+    }
 
-	public void setTxNome(JTextField txNome) {
-		this.txNome = txNome;
-	}
-
-	public JTextArea getTxDescricaoAtividade() {
-		return txDescricaoAtividade;
-	}
-
-	public void setTxDescricaoAtividade(JTextArea txDescricaoAtividade) {
-		this.txDescricaoAtividade = txDescricaoAtividade;
-	}
+    public void setTxDescricaoAtividade(JTextArea txDescricaoAtividade) {
+        this.txDescricaoAtividade = txDescricaoAtividade;
+    }
 
 
-	public JFormattedTextField getTxData() {
-		return txData;
-	}
+    public JFormattedTextField getTxData() {
+        return txData;
+    }
 
-	public void setTxData(JFormattedTextField txData) {
-		this.txData = txData;
-	}
+    public void setTxData(JFormattedTextField txData) {
+        this.txData = txData;
+    }
 
-	public JTextField getTxTipoAtividade() {
-		return txTipoAtividade;
-	}
+    public JTextField getTxTipoAtividade() {
+        return txTipoAtividade;
+    }
 
-	public void setTxTipoAtividade(JTextField txTipoAtividade) {
-		this.txTipoAtividade = txTipoAtividade;
-	}
+    public void setTxTipoAtividade(JTextField txTipoAtividade) {
+        this.txTipoAtividade = txTipoAtividade;
+    }
 
-	public JTextField getTxCargaHoraria() {
-		return txCargaHoraria;
-	}
+    public JTextField getTxNumeroVagas() {
+        return txNumeroVagas;
+    }
 
-	public void setTxCargaHoraria(JTextField txCargaHoraria) {
-		this.txCargaHoraria = txCargaHoraria;
-	}
+    public void setTxNumeroVagas(JTextField txNumeroVagas) {
+        this.txNumeroVagas = txNumeroVagas;
+    }
 
-	public JTextField getTxNumeroVagas() {
-		return txNumeroVagas;
-	}
+    public JButton getBtCriarAtividade() {
+        return btCriarAtividade;
+    }
 
-	public void setTxNumeroVagas(JTextField txNumeroVagas) {
-		this.txNumeroVagas = txNumeroVagas;
-	}
+    public void setBtCriarAtividade(JButton btCriarAtividade) {
+        this.btCriarAtividade = btCriarAtividade;
+    }
 
-	public JButton getBtCriarAtividade() {
-		return btCriarAtividade;
-	}
+    public JFormattedTextField getTxHoraInicio() {
+        return txHoraInicio;
+    }
 
-	public void setBtCriarAtividade(JButton btCriarAtividade) {
-		this.btCriarAtividade = btCriarAtividade;
-	}
+    public void setTxHoraInicio(JFormattedTextField txHoraInicio) {
+        this.txHoraInicio = txHoraInicio;
+    }
 
-	public JFormattedTextField getTxHoraInicio() {
-		return txHoraInicio;
-	}
+    public JFormattedTextField getTxHoraFim() {
+        return txHoraFim;
+    }
 
-	public void setTxHoraInicio(JFormattedTextField txHoraInicio) {
-		this.txHoraInicio = txHoraInicio;
-	}
-
-	public JFormattedTextField getTxHoraFim() {
-		return txHoraFim;
-	}
-
-	public void setTxHoraFim(JFormattedTextField txHoraFim) {
-		this.txHoraFim = txHoraFim;
-	}
-	
-
+    public void setTxHoraFim(JFormattedTextField txHoraFim) {
+        this.txHoraFim = txHoraFim;
+    }
 }

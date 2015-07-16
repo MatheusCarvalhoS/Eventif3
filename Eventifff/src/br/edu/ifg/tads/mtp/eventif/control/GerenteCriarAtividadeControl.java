@@ -24,170 +24,185 @@ import br.edu.ifg.tads.mtp.eventif.view.GerenteCriarEventoView;
 import br.edu.ifg.tads.mtp.eventif.view.GerenteListarAtividadeView;
 
 public class GerenteCriarAtividadeControl {
-	private GerenteCriarAtividadeView criarAtividade;
-	private GerenteListarAtividadeView listarAtividade;
-	private JPanel painel;
-	private int idEvento;
-	private int idAtividade;
+    private GerenteCriarAtividadeView criarAtividade;
+    private GerenteListarAtividadeView listarAtividade;
+    private JPanel painel;
+    private int idEvento;
+    private int idAtividade;
 
-	public JPanel getGerenteCriarAtividadeControl(int idEvento) {
-		this.idEvento = idEvento;
-		criarAtividade = new GerenteCriarAtividadeView();
-		painel = criarAtividade.getGerenteCriarAtividadeView();
-		adicionaEventos();
-		return painel;
-	}
+    public JPanel getGerenteCriarAtividadeControl(int idEvento) {
+        this.idEvento = idEvento;
+        criarAtividade = new GerenteCriarAtividadeView();
+        painel = criarAtividade.getGerenteCriarAtividadeView();
+        adicionaEventos();
+        return painel;
+    }
 
-	public JPanel getGerenteAlterarAtividadeControl(int id) {
-		this.idAtividade = id;
-		AtividadeModel atividade = new AtividadeDAO().buscaAtividade(id);
+    public JPanel getGerenteAlterarAtividadeControl(int id) {
+        this.idAtividade = id;
+        AtividadeModel atividade = new AtividadeDAO().buscaAtividade(id);
 
-		criarAtividade = new GerenteCriarAtividadeView();
-		painel = criarAtividade.getGerenteCriarAtividadeView();
+        criarAtividade = new GerenteCriarAtividadeView();
+        painel = criarAtividade.getGerenteCriarAtividadeView();
 
-		criarAtividade.getBtCriarAtividade().setText("Alterar");
+        criarAtividade.getBtCriarAtividade().setText("Alterar");
 
-		criarAtividade.getTxNome().setText(atividade.getNomeAtividade());
-		criarAtividade.getTxDescricaoAtividade().setText(
-				atividade.getDescricaoAtividade());
-		criarAtividade.getTxTipoAtividade().setText(
-				atividade.getTipoAtividade());
-		criarAtividade.getTxCargaHoraria().setText(atividade.getCargaHoraria());
-		criarAtividade.getTxNumeroVagas().setText(
-				"" + atividade.getNumeroVagas());
-		criarAtividade.getTxPalestrante().setText(atividade.getPalestrante());
+        criarAtividade.getTxNome().setText(atividade.getNomeAtividade());
+        criarAtividade.getTxDescricaoAtividade().setText(
+                atividade.getDescricaoAtividade());
+        criarAtividade.getTxTipoAtividade().setText(
+                atividade.getTipoAtividade());
+        criarAtividade.getTxNumeroVagas().setText(
+                "" + atividade.getNumeroVagas());
+        criarAtividade.getTxPalestrante().setText(atividade.getPalestrante());
 
-		String string = atividade.getData();// /////// formatando manualmente a
-											// data;
-		string = string + " ";
-		String ano = string.substring(0, 4);
-		String mes = string.substring(5, 7);
-		String dia = string.substring(8, 10);
-		string = (dia + "/" + mes + "/" + ano);
-		criarAtividade.getTxData().setValue(string);
+        String string = atividade.getData();// /////// formatando manualmente a
+                                            // data;
+        string = string + " ";
+        String ano = string.substring(0, 4);
+        String mes = string.substring(5, 7);
+        String dia = string.substring(8, 10);
+        string = (dia + "/" + mes + "/" + ano);
+        criarAtividade.getTxData().setValue(string);
 
-		criarAtividade.getTxHoraInicio().setValue(atividade.getHoraInicio());
-		criarAtividade.getTxHoraFim().setValue(atividade.getHoraEncerramento());
-		
-		adicionaEventosAlterar();
-		return painel;
-	}
+        criarAtividade.getTxHoraInicio().setValue(atividade.getHoraInicio());
+        criarAtividade.getTxHoraFim().setValue(atividade.getHoraEncerramento());
+       
+        adicionaEventosAlterar();
+        return painel;
+    }
 
-	public void adicionaEventos() {
-		criarAtividade.getBtCriarAtividade().addActionListener(
-				new ActionListener() {
+    public void adicionaEventos() {
+        criarAtividade.getBtCriarAtividade().addActionListener(
+                new ActionListener() {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
 
-						if (new VerificaCamposCriarAtividade()
-								.getVerificaCamposCriarAtividade(criarAtividade)) {
+                        if (new VerificaCamposCriarAtividade()
+                                .getVerificaCamposCriarAtividade(criarAtividade)) {
 
-							AtividadeModel atividade = new AtividadeModel();
+                            AtividadeModel atividade = new AtividadeModel();
 
-							atividade.setIdEvento(idEvento);
-							atividade.setNomeAtividade(criarAtividade
-									.getTxNome().getText());
-							atividade.setCargaHoraria(criarAtividade
-									.getTxCargaHoraria().getText());
-							atividade.setDescricaoAtividade(criarAtividade
-									.getTxDescricaoAtividade().getText());
-							atividade.setHoraEncerramento(criarAtividade
-									.getTxHoraFim().getText());
-							atividade.setHoraInicio(criarAtividade
-									.getTxHoraInicio().getText());
-							atividade.setData(criarAtividade.getTxData()
-									.getText());
-							atividade.setNumeroVagas(Integer
-									.parseInt(criarAtividade.getTxNumeroVagas()
-											.getText()));
-							atividade.setTipoAtividade(criarAtividade
-									.getTxTipoAtividade().getText());
-							atividade.setPalestrante(criarAtividade
-									.getTxPalestrante().getText());
+                            atividade.setIdEvento(idEvento);
+                            atividade.setNomeAtividade(criarAtividade
+                                    .getTxNome().getText());
+                           
+                            String horaFimS = criarAtividade.getTxHoraFim().getText()+" ";
+                            String horaInicioS = criarAtividade.getTxHoraInicio().getText()+" ";
+                            int horaFim = Integer.parseInt(horaFimS.substring(0, 2));
+                            int minFim = Integer.parseInt(horaFimS.substring(3, 5));
+                            int horaIni = Integer.parseInt(horaInicioS.substring(0, 2));
+                            int minIni = Integer.parseInt(horaInicioS.substring(3, 5));
+                            int cargaHoraria = ((horaFim*60)+minFim) - ((horaIni*60)+minIni);
+                           
+                            atividade.setCargaHoraria(""+cargaHoraria);
+                            atividade.setDescricaoAtividade(criarAtividade
+                                    .getTxDescricaoAtividade().getText());
+                            atividade.setHoraEncerramento(criarAtividade
+                                    .getTxHoraFim().getText());
+                            atividade.setHoraInicio(criarAtividade
+                                    .getTxHoraInicio().getText());
+                            atividade.setData(criarAtividade.getTxData()
+                                    .getText());
+                            atividade.setNumeroVagas(Integer
+                                    .parseInt(criarAtividade.getTxNumeroVagas()
+                                            .getText()));
+                            atividade.setTipoAtividade(criarAtividade
+                                    .getTxTipoAtividade().getText());
+                            atividade.setPalestrante(criarAtividade
+                                    .getTxPalestrante().getText());
 
-							if (new AtividadeDAO().adicionaAtividade(atividade)) {
-								JOptionPane.showMessageDialog(null,
-										"Atividade criada");
-							} else {
-								JOptionPane.showMessageDialog(null,
-										"Atividade não Foi criada");
-							}
+                            if (new AtividadeDAO().adicionaAtividade(atividade)) {
+                                JOptionPane.showMessageDialog(null,
+                                        "Atividade criada");
+                            } else {
+                                JOptionPane.showMessageDialog(null,
+                                        "Atividade não Foi criada");
+                            }
 
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Verifique o preenchimento dos campos");
-						}
-					}
-				});
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    "Verifique o preenchimento dos campos");
+                        }
+                    }
+                });
 
-	}
+    }
 
-	public void adicionaEventosAlterar() {
-		criarAtividade.getBtCriarAtividade().addActionListener(
-				new ActionListener() {
+    public void adicionaEventosAlterar() {
+        criarAtividade.getBtCriarAtividade().addActionListener(
+                new ActionListener() {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
 
-						if (new VerificaCamposCriarAtividade()
-								.getVerificaCamposCriarAtividade(criarAtividade)) {
+                        if (new VerificaCamposCriarAtividade()
+                                .getVerificaCamposCriarAtividade(criarAtividade)) {
 
-							AtividadeModel atividade = new AtividadeModel();
-							atividade.setIdAtividade(idAtividade);
-							atividade.setIdEvento(idEvento);
-							atividade.setNomeAtividade(criarAtividade
-									.getTxNome().getText());
-							atividade.setCargaHoraria(criarAtividade
-									.getTxCargaHoraria().getText());
-							atividade.setDescricaoAtividade(criarAtividade
-									.getTxDescricaoAtividade().getText());
-							atividade.setHoraEncerramento(criarAtividade
-									.getTxHoraFim().getText());
-							atividade.setHoraInicio(criarAtividade
-									.getTxHoraInicio().getText());
-							atividade.setData(criarAtividade.getTxData()
-									.getText());
-							atividade.setNumeroVagas(Integer
-									.parseInt(criarAtividade.getTxNumeroVagas()
-											.getText()));
-							atividade.setTipoAtividade(criarAtividade
-									.getTxTipoAtividade().getText());
-							atividade.setPalestrante(criarAtividade
-									.getTxPalestrante().getText());
+                            AtividadeModel atividade = new AtividadeModel();
+                            atividade.setIdAtividade(idAtividade);
+                            atividade.setIdEvento(idEvento);
+                            atividade.setNomeAtividade(criarAtividade
+                                    .getTxNome().getText());
+                           
+                            String horaFimS = criarAtividade.getTxHoraFim().getText()+" ";
+                            String horaInicioS = criarAtividade.getTxHoraInicio().getText()+" ";
+                            int horaFim = Integer.parseInt(horaFimS.substring(0, 2));
+                            int minFim = Integer.parseInt(horaFimS.substring(3, 5));
+                            int horaIni = Integer.parseInt(horaInicioS.substring(0, 2));
+                            int minIni = Integer.parseInt(horaInicioS.substring(3, 5));
+                            int cargaHoraria = ((horaFim*60)+minFim) - ((horaIni*60)+minIni);
+                           
+                            atividade.setCargaHoraria(""+cargaHoraria);
+                            atividade.setDescricaoAtividade(criarAtividade
+                                    .getTxDescricaoAtividade().getText());
+                            atividade.setHoraEncerramento(criarAtividade
+                                    .getTxHoraFim().getText());
+                            atividade.setHoraInicio(criarAtividade
+                                    .getTxHoraInicio().getText());
+                            atividade.setData(criarAtividade.getTxData()
+                                    .getText());
+                            atividade.setNumeroVagas(Integer
+                                    .parseInt(criarAtividade.getTxNumeroVagas()
+                                            .getText()));
+                            atividade.setTipoAtividade(criarAtividade
+                                    .getTxTipoAtividade().getText());
+                            atividade.setPalestrante(criarAtividade
+                                    .getTxPalestrante().getText());
 
-							try {
-								if (new AtividadeDAO()
-										.alterarAtividade(atividade)) {
-									JOptionPane.showMessageDialog(null,
-											"Atividade Alterada! ");
-								} else {
-									JOptionPane.showMessageDialog(null,
-											"Atividade não Foi Alterada! ");
-								}
-							} catch (HeadlessException | ParseException e1) {
-								JOptionPane.showMessageDialog(null,
-										"Erro de Operação! " + e1.getMessage());
-								e1.printStackTrace();
-							}
+                            try {
+                                if (new AtividadeDAO()
+                                        .alterarAtividade(atividade)) {
+                                    JOptionPane.showMessageDialog(null,
+                                            "Atividade Alterada! ");
+                                } else {
+                                    JOptionPane.showMessageDialog(null,
+                                            "Atividade não Foi Alterada! ");
+                                }
+                            } catch (HeadlessException | ParseException e1) {
+                                JOptionPane.showMessageDialog(null,
+                                        "Erro de Operação! " + e1.getMessage());
+                                e1.printStackTrace();
+                            }
 
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Verifique o preenchimento dos campos");
-						}
-					}
-				});
-	}
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    "Verifique o preenchimento dos campos");
+                        }
+                    }
+                });
+    }
 
-	public boolean excluirAtividade(int idEvento, int idAividade) {
-		
-		if(new AtividadeDAO().excluirAtividade(idEvento, idAividade)){
-			JOptionPane.showMessageDialog(null, "Exclusão de Atividade Feita com Sucesso!");
-			
-		}else{
-			JOptionPane.showMessageDialog(null, "Não foi Possivel deletar a Atividade! ");
-		}
-		return true;
-	}
+    public boolean excluirAtividade(int idEvento, int idAividade) {
+       
+        if(new AtividadeDAO().excluirAtividade(idEvento, idAividade)){
+            JOptionPane.showMessageDialog(null, "Exclusão de Atividade Feita com Sucesso!");
+           
+        }else{
+            JOptionPane.showMessageDialog(null, "Não foi Possivel deletar a Atividade! ");
+        }
+        return true;
+    }
 
 }
