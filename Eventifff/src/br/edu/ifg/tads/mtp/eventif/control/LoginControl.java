@@ -79,7 +79,6 @@ public class LoginControl {
 					if (new ValidacaoCPF().validaCpf(cpf)) {
 						try {
 							senha = new MD5().gerarSenha(login.getTfSenha().getText());
-							System.out.println("Senha: "+senha);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

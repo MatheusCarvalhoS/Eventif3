@@ -86,8 +86,6 @@ public class EventoDAO {
 				dia = dataFim.substring(8, 10);
 				dataFim = (dia+"/"+mes+"/"+ano);
 				
-				System.out.println("dtIn: "+dataInicio+" dtFim: "+dataFim);
-
 				evento.setOrganizador(result1.getString("organizador"));
 				evento.setTelefone(result1.getString("telefoneContato"));
 				evento.setLocal(result1.getString("localEvento"));

@@ -34,7 +34,6 @@ public class AlunoListarEventoControl {
 		
 		preencheTabela();
 		adicionaEventos();
-		//adicionaListenner();
 		return painel;
 	}
 
@@ -134,7 +133,6 @@ public class AlunoListarEventoControl {
 		listarEvento.getJbtnPesquisar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("pesquisei evento");
 				listarEvento.getTable().removeAll();
 				listarEvento.getTable().setModel(new PesquisarEventoOuAtividadeControl().getPesquisarEventoControl(listarEvento.getJtfPesquisar().getText()));
 

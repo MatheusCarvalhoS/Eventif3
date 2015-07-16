@@ -194,7 +194,6 @@ public class AlunoDAO {
 			ResultSet result1 = stmt1.executeQuery();
 			if(result1.next()){
 				int vagasDisponiveis = result1.getInt("vagasD");
-				System.out.println("Vagas Disponiveis: "+vagasDisponiveis);
 				if(vagasDisponiveis>0){
 					vagasDisponiveis--;
 					stmt2.setInt(1, idAluno);
@@ -277,7 +276,6 @@ public class AlunoDAO {
 			if(result.next()){
 				if(!result.getBoolean("pA")){
 					idAluno = -2;
-					System.out.println("idALuno: "+idAluno);
 				}else{
 					idAluno = result.getInt("idA");
 				}

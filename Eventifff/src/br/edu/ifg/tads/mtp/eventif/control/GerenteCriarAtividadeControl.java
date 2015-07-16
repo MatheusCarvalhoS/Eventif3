@@ -45,8 +45,7 @@ public class GerenteCriarAtividadeControl {
                 "" + atividade.getNumeroVagas());
         criarAtividade.getTxPalestrante().setText(atividade.getPalestrante());
 
-        String string = atividade.getData();// /////// formatando manualmente a
-                                            // data;
+        String string = atividade.getData();
         string = string + " ";
         String ano = string.substring(0, 4);
         String mes = string.substring(5, 7);
